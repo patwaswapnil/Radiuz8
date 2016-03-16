@@ -1,0 +1,43 @@
+/* Empty. Add your own CSS if you like */
+/* Common CSS */
+
+/* End Common CSS */
+a.menu-item {
+    color: #424242;
+    text-transform: UPPERCASE;
+    font-weight: bold;
+}
+a.menu-item i {
+    font-size: 18px !important;
+}
+.menu-bottom {
+    bottom: 45px !important; 
+}
+.menu-option-bottom a {
+    color: #ddd;
+    font-size: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 10px 10px 0px;
+} 
+.menu-option-bottom i{
+	margin-right: 4px !important;
+}
+.menu-option-bottom {
+    bottom: 16px;
+    left: 18px;
+    right: 16px;
+    position: absolute;
+}
+span.badge.custom-badge {
+    position: absolute;
+    top: 5px;
+    left: 15px;
+    background: #EC1D23;
+    padding: 0px 2px;
+    color: #fff;
+    border: none;
+}
+/* Home CSS */
+
+/* End Home CSS */

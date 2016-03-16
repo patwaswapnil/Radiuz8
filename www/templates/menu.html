@@ -1,0 +1,84 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-dark">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+             <ion-nav-buttons side="right"> 
+                <button class="button button-icon button-clear ion-chatbubble">
+                 <span class="badge custom-badge" >3</span>
+        </button> 
+                <button class="button button-icon button-clear ion-android-more-vertical" ng-click="openPopover()">
+        </button> 
+            </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+   <ion-side-menu side="left">
+<ion-header-bar class="expanded bar bar-header disable-user-behavior"  style="background-color: #EC1D23;"> 
+ 
+             
+            
+            <div class="menu-bottom">
+             chintanlad@gmail.com
+            </div>
+            <div class="menu-option-bottom">
+                <a href="#" class="">
+    <i class="icon ion-edit"></i>
+    Edit Profile
+  </a>
+            </div>
+        </ion-header-bar>
+
+    <ion-content class="stable-bg has-header has-expanded-header menu-content">
+      <ion-list class="menu-list">
+   <div class="list">
+
+  <a href="#" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    Home
+  </a>
+
+  <a href="#" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    Search
+  </a>
+
+  <a href="#" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    My Feeds
+  </a>
+
+  <a href="#" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    Followed Celebrities
+  </a>
+  <a href="#" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    My Messages
+  </a>
+  <a href="#" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    Contact
+  </a>
+  <a href="#" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    About Radiuz8
+  </a>
+  <a href="#" class="item item-icon-left menu-item" ng-click="login()">
+    <i class="icon ion-chevron-right"></i>
+    Login
+  </a>
+
+</div>
+      </ion-list>
+ 
+ 
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
