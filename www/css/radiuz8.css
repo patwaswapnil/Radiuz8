@@ -24,8 +24,8 @@ a.menu-item i {
     font-size: 18px !important;
 }
 .header-logo{
-	 height: 30px;
-    margin-top: 8px;
+	     height: 20px;
+    margin-top: 12px;
 }
 .menu-bottom {
     bottom: 45px !important; 
@@ -218,3 +218,8 @@ a.celeb-name {
 	text-align: right;
 }
 /* End Listing CSS */
+/*  Chant CSS */
+/* End Chant CSS */
+.header-popover{
+	left: auto !important;
+}

@@ -57,6 +57,24 @@ angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8
         controller: 'DetailCtrl'
       }
     }
+  })
+  .state('app.chat-listing', {
+    url: '/chat-listing',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chat-listing.html',
+        controller: 'ChatListingCtrl'
+      }
+    }
+  })
+  .state('app.chat', {
+    url: '/chat',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chat.html',
+        controller: 'ChatCtrl'
+      }
+    }
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');

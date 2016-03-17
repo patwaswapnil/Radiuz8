@@ -59,7 +59,34 @@ angular.module('radiuz8.controllers', [])
     $scope.listingPopover.show($event);
   }; 
 }])
-.controller('DetailCtrl',['$scope', function($scope) {
+.controller('DetailCtrl',['$scope', '$cordovaInAppBrowser', '$ionicPlatform', function($scope, $cordovaInAppBrowser, $ionicPlatform) {
+    $ionicPlatform.ready(function() {
+
+
+    var options = {
+      location: 'yes',
+      clearcache: 'yes',
+      toolbar: 'no',
+      closebuttoncaption: 'DONE?'
+    };
+
+
+    $scope.openlink = function() {
+      $cordovaInAppBrowser.open('https://twitter.com/imVkohli', '_blank', options)
+        .then(function(event) {
+          // success
+        })
+        .catch(function(event) {
+          // error
+        });
+    }
+
+  })
+}])
+.controller('ChatCtrl',['$scope', function($scope) {
+  
+}])
+.controller('ChatListingCtrl',['$scope', function($scope) {
   
 }])
 // .controller('Ctrl',['$scope', function($scope) {
