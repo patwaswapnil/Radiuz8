@@ -1,0 +1,124 @@
+<ion-view hide-menu-button="true">
+    <ion-nav-title>
+       <img ng-src="img/logo.png" class="header-logo">
+    </ion-nav-title>
+    <ion-subheader-bar class="bar bar-subheader">
+        <div class="row">
+            <div class="col-60">
+                <h3 class="listing-title">Film/TV Celebrities</h3>
+            </div>
+            <div class="col-20 filter-btn-wrap">
+                <button class="button button-icon button-clear ion-search"></button>
+            </div>
+            <div class="col-20 filter-btn-wrap">
+                <button class="button button-icon button-clear ion-funnel" ng-click="openFilters()"></button>
+            </div>
+        </div>
+    </ion-subheader-bar>
+    <ion-content class="has-subheader">
+        <div class="celebrity-listing listing-listing">
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+       <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"> </a> 
+  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2></a> 
+      <p class="mt2">Cricketer</p>
+      <p>Social Reach: 1256K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"> </a>
+      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
+      <p class="mt2">Actor</p>
+      <p>Social Reach: 3255K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"> </a>
+      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
+      <p class="mt2">Cricketer</p>
+      <p>Social Reach: 4555K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+       <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"> </a> 
+  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2></a> 
+      <p class="mt2">Cricketer</p>
+      <p>Social Reach: 1256K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"> </a>
+      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
+      <p class="mt2">Actor</p>
+      <p>Social Reach: 3255K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"> </a>
+      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
+      <p class="mt2">Cricketer</p>
+      <p>Social Reach: 4555K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+       <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"> </a> 
+  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2></a> 
+      <p class="mt2">Cricketer</p>
+      <p>Social Reach: 1256K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"> </a>
+      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
+      <p class="mt2">Actor</p>
+      <p>Social Reach: 3255K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+    </span>
+            </div>
+            <div class="list list-listing">
+                <span class="item item-thumbnail-left">
+      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"> </a>
+      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
+      <p class="mt2">Cricketer</p>
+      <p>Social Reach: 4555K</p>
+      <button class="radiuz-button radiuz-primary">Follow</button>
+    </span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+<script id="templates/listing-popover.html" type="text/ng-template">
+    <ion-popover-view>
+        <ion-content>
+            <span class="filter-head">
+           <h5>Filters By</h5>
+          
+ <ion-list>
+
+  <ion-checkbox  class="checkbox-cover">Business</ion-checkbox>
+  <ion-checkbox  class="checkbox-cover">Movie</ion-checkbox>
+  <ion-checkbox  class="checkbox-cover">Music</ion-checkbox>
+    <ion-checkbox  class="checkbox-cover">Sports</ion-checkbox>
+  <ion-checkbox  class="checkbox-cover">Artist</ion-checkbox> 
+
+</ion-list> </span>
+        </ion-content>
+    </ion-popover-view>
+</script>

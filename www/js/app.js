@@ -31,13 +31,30 @@ angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
   .state('app.home', {
     url: '/home',
     views: {
       'menuContent': {
         templateUrl: 'templates/home.html',
         controller: 'HomeCtrl'
+      }
+    }
+  })
+  .state('app.celebrity-listing', {
+    url: '/celebrity-listing',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/celebrity-listing.html',
+        controller: 'ListingCtrl'
+      }
+    }
+  })
+  .state('app.celebrity-detail', {
+    url: '/celebrity-detail',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/celebrity-detail.html',
+        controller: 'DetailCtrl'
       }
     }
   });

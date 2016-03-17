@@ -47,8 +47,21 @@ angular.module('radiuz8.controllers', [])
     }, 1000);
   };
 }])
-
 .controller('HomeCtrl',['$scope', function($scope) {
+}])
+.controller('ListingCtrl',['$scope', '$ionicPopover', function($scope, $ionicPopover) {
+    $ionicPopover.fromTemplateUrl('templates/listing-popover.html', {
+    scope: $scope
+  }).then(function(popover) {
+    $scope.listingPopover = popover;
+  });
+  $scope.openFilters = function($event) {
+    $scope.listingPopover.show($event);
+  }; 
+}])
+.controller('DetailCtrl',['$scope', function($scope) {
   
 }])
- 
+// .controller('Ctrl',['$scope', function($scope) {
+  
+// }])
