@@ -4,7 +4,7 @@
 // 'radiuz8' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'radiuz8.controllers' is found in controllers.js
-angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8.services'])
+angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8.services', 'angularMoment'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

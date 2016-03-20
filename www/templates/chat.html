@@ -1,10 +1,65 @@
-<ion-view hide-menu-button="true">
- <ion-nav-title>
-      <img ng-src="img/logo.png" class="header-logo">
- </ion-nav-title>
-  <ion-content>
- 	<div class="row">
- 		<h4>Coming SOnn</h4>
- 	</div>
-  </ion-content>
-</ion-view>
+
+       <ion-view id="chat" cache-view="false"> 
+          <ion-content  class="has-header has-footer chat-bg"> 
+              <div ng-repeat="message in messages.messages | orderBy:'date'" class="message-wrapper">
+      
+                  <div  ng-if="$even">
+                      
+                    <img ng-click="viewProfile(message)" class="profile-pic left" 
+                          ng-src="img/srk.jpg" />
+      
+                      <div class="chat-bubble left">
+      
+                          <div class="message">
+                          {{message.text}}
+                          </div>
+      
+                          <div class="message-detail">
+                              <span ng-click="viewProfile(message)" 
+                                    class="bold">Shahrukh Khan</span>, 
+                              <span am-time-ago="message.date"></span>
+                          </div>
+      
+                      </div>
+                  </div>
+      
+                  <div  ng-if="$odd">
+                    
+                       <img ng-click="viewProfile(message)" class="profile-pic right" 
+                          ng-src="img/dhoni.jpg" />
+                    
+                      <div class="chat-bubble right">
+      
+                          <div class="message" >
+                          {{message.text}}
+                          </div>
+      
+                          <div class="message-detail">
+                              <span ng-click="viewProfile(message)" 
+                                  class="bold">MS Dhoni</span>, 
+                              <span am-time-ago="message.date"></span>
+                          </div>
+      
+                      </div>
+                    
+                  </div>
+      
+                  <div class="cf"></div>  
+      
+              </div>
+          </ion-content>
+      
+          <form name="sendMessageForm" ng-submit="sendMessage(sendMessageForm)" novalidate>
+              <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
+                  <label class="item-input-wrapper">
+                      <textarea ng-model="input.message" value="" placeholder="Send {{toUser.username}} a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+                  </label>
+                  <div class="footer-btn-wrap">
+                    <button class="button button-icon icon ion-android-send footer-btn" type="submit"
+                        ng-disabled="!input.message || input.message === ''">
+                    </button>
+                  </div>
+              </ion-footer-bar>
+          </form>
+          
+      </ion-view>
