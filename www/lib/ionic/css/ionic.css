@@ -3356,6 +3356,7 @@ body.grade-c {
   right: 0;
   bottom: 0;
   left: 0;
+    margin-left: -1px !important;
   overflow: hidden;
   margin-top: -1px;
   padding-top: 1px;

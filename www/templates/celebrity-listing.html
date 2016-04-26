@@ -1,6 +1,6 @@
 <ion-view hide-menu-button="true">
     <ion-nav-title>
-       <img ng-src="img/logo.png" class="header-logo">
+        <img ng-src="img/logo.png" class="header-logo">
     </ion-nav-title>
     <ion-subheader-bar class="bar bar-subheader">
         <div class="row">
@@ -17,108 +17,137 @@
     </ion-subheader-bar>
     <ion-content class="has-subheader">
         <div class="celebrity-listing listing-listing">
-            <div class="list list-listing">
+            <div class="list list-listing" ng-repeat="celeb in celebs">
                 <span class="item item-thumbnail-left">
-       <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"> </a> 
-  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2></a> 
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 1256K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-
-    </span>
+       <a class="celeb-img-a" ng-href="{{getSegment(celeb.permalink)}}"><img ng-src="{{::celeb.img}}" class="listing-img"> </a> 
+      <a   ng-href="{{getSegment(celeb.permalink)}}" class="celeb-name"><h2>{{::celeb.title}}</h2></a> 
+      <p class="mt2">{{::celeb.age}}<span ng-if="celeb.age">,</span> {{::celeb.gender}}</p>
+                <p>Social Reach: {{::celeb.reach}}</p>
+                <button class="radiuz-button radiuz-primary" ng-if="!isFollow" ng-click="follow($event, celeb.id, celeb.title)">Follow</button>
+                <button class="radiuz-button radiuz-primary" ng-if="isFollow" ng-click="follow($event, celeb.id, celeb.title)">Unfollow</button>
+                </span>
             </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"> </a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
-      <p class="mt2">Actor</p>
-      <p>Social Reach: 3255K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-            </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"> </a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 4555K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-            </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-       <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"> </a> 
-  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2></a> 
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 1256K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-
-    </span>
-            </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"> </a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
-      <p class="mt2">Actor</p>
-      <p>Social Reach: 3255K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-            </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"> </a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 4555K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-            </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-       <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"> </a> 
-  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2></a> 
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 1256K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-
-    </span>
-            </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"> </a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
-      <p class="mt2">Actor</p>
-      <p>Social Reach: 3255K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-            </div>
-            <div class="list list-listing">
-                <span class="item item-thumbnail-left">
-      <a class="celeb-img-a" ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"> </a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 4555K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
+            <div class="txt-center" ng-if="!canLoadMore">
+                <p class="no-more-celeb">All celebrities listed.</p>
             </div>
         </div>
+        <ion-infinite-scroll on-infinite="loadMoreCeleb()" ng-if="canLoadMore" immediate-check="false" distance="1%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>
-<script id="templates/listing-popover.html" type="text/ng-template">
-    <ion-popover-view>
-        <ion-content>
-            <span class="filter-head">
-           <h5>Filters By</h5>
-          
- <ion-list>
+<script id="templates/filters.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-dark">
+            <h1 class="title">Filter</h1>
+            <button class="button button-icon button-clear ion-close-round" ng-click="closeFilters()" menu-toggle="right">
+        </button>
+        </ion-header-bar>
+        <ion-content has-bouncing="false" class="filter-modal">
+            <div class="row pm0">
+                <div class="left-panel col-33 full-height ">
+                    <div class="list" ng-init="showCat = 'cat'">
+                        <a class="item noborder" ng-click="showCat = 'cat'">
+    Category
+  </a>
+                        <a class="item noborder" ng-click="showCat = 'showSubCat'" ng-show="subcat.length">
+  Sub Category
+  </a>
+                        <a class="item noborder" ng-click="showCat = 'reach'">
+    Reach
+  </a>
+                        <a class="item noborder" ng-click="showCat = 'age'">
+    Age 
+  </a>
+                        <a class="item noborder" ng-click="showCat = 'socialfollow'">
+    Social Followers
+  </a>
+                        <a class="item noborder" ng-click="showCat = 'gender'">
+    Gender
+  </a>
+                        <a class="item noborder" ng-click="showCat = 'pricing'">
+    Pricing  
+  </a> {{filters}} </div>
+                </div>
+                <div class="right-panel col-67 white-bg">
+                    <span ng-show="showCat == 'cat'">
+                    <ion-list> 
+                      <ion-radio class="noborder" ng-click="filterCatCeleb()"  ng-value="" ng-model="filters.cat">All Category</ion-radio>  
+                        <ion-radio class="noborder" ng-repeat="filter in filterCat" ng-click="filterCeleb('resetCat')"  ng-value="filter.cat_ID" ng-model="filters.cat">{{::filter.name}}</ion-radio>
+                    </ion-list> 
+                    
+                    </span>
+                    <span ng-show="showCat == 'showSubCat'"> 
+                  <span  ng-repeat="subcatitem in subcat">
+                        <span class="sub-cat-title item"> {{::subcatitem.cat_name}} </span>
 
-  <ion-checkbox  class="checkbox-cover">Business</ion-checkbox>
-  <ion-checkbox  class="checkbox-cover">Movie</ion-checkbox>
-  <ion-checkbox  class="checkbox-cover">Music</ion-checkbox>
-    <ion-checkbox  class="checkbox-cover">Sports</ion-checkbox>
-  <ion-checkbox  class="checkbox-cover">Artist</ion-checkbox> 
+                    <ion-list class="sub-cat-li">
 
-</ion-list> </span>
+                        <ion-checkbox ng-repeat="subcatChild in subcatitem.children" ng-click="toggleSelection(subcatChild.cat_ID)">{{::subcatChild.cat_name}}</ion-checkbox>
+
+                    </ion-list>
+
+                    </span>
+                    </span>
+                    <span ng-show="showCat == 'reach'">
+                    <ion-list>
+                        <ion-radio class="noborder" ng-model="choice" ng-value="0" ng-click="">High to Low</ion-radio>
+                        <ion-radio class="noborder" ng-model="choice" ng-value="1" ng-click="">Low to High</ion-radio> 
+                    </ion-list> 
+                </span>
+                    <span ng-show="showCat == 'age'">
+                    <ion-list>
+                        <div class="">
+                            <div class="col"><input type="text" class="filter-input" placeholder="Min age" /></div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Max age" /></div>
+                        </div>
+                    </ion-list> 
+                </span>
+                    <span ng-show="showCat == 'gender'">
+                    <ion-list> 
+                             <ion-checkbox ng-model="filters.filters.male" ng-click="filterCeleb()">Male</ion-checkbox>
+                      <ion-checkbox ng-model="filters.filters.female" ng-click="filterCeleb()">Female</ion-checkbox>
+                      <ion-checkbox ng-model="filters.filters.others" ng-click="filterCeleb()">Other</ion-checkbox> 
+                    </ion-list> 
+                </span>
+                    <span ng-show="showCat == 'pricing'">
+                    <ion-list> 
+                      <div class="">
+                            <div class="col"><input type="text" class="filter-input" placeholder="Min price" /></div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Max price" /></div>
+                        </div>
+                    </ion-list> 
+                </span>
+                    <span ng-show="showCat == 'socialfollow'">
+                    <ion-list > 
+                        <div class="heading-sub">Facebook</div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                       
+                        <div class="heading-sub">Twitter</div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                        
+                        <div class="heading-sub">Instagram</div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                         
+                        <div class="heading-sub">YouTube</div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                        
+                        <div class="heading-sub">Google Plus</div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                        
+                    </ion-list> 
+                </span>
+                </div>
+            </div>
+
         </ion-content>
-    </ion-popover-view>
+        <ion-footer-bar class="bar bar-footer bar-dark">
+            <button class="button button-clear">Clear </button>
+            <button class="button button-clear">Apply</button>
+
+        </ion-footer-bar>
+    </ion-modal-view>
 </script>

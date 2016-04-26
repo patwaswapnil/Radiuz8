@@ -10,10 +10,10 @@
       </ion-nav-buttons>
              <ion-nav-buttons side="right"> 
                 <button class="button button-icon button-clear ion-chatbubble" ui-sref="app.chat-listing">
-                 <span class="badge custom-badge" >3</span>
+                 <!-- <span class="badge custom-badge" >3</span> -->
         </button> 
-                <button class="button button-icon button-clear ion-android-more-vertical" ng-click="openPopover()">
-        </button> 
+               <!--  <button class="button button-icon button-clear ion-android-more-vertical" ng-click="openPopover()">
+        </button>  -->
             </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
@@ -23,56 +23,75 @@
 <ion-header-bar class="expanded bar bar-header disable-user-behavior"  style="background-color: #EC1D23;"> 
  
              
-            
+<span ng-if="isLoggedIn">
             <div class="menu-bottom">
-             chintanlad@gmail.com
+             {{user.user_email}}
             </div>
             <div class="menu-option-bottom">
-                <a href="#" class="">
+                <a href="app/edit-profile/{{user.ID}}" class="">
     <i class="icon ion-edit"></i>
     Edit Profile
   </a>
+  </div>
+</span>             
+<span ng-if="!isLoggedIn">
+            <div class="menu-bottom">
+             Hi, Guest
             </div>
+            <div class="menu-option-bottom">
+                <a ng-click="loginFromMenu()" class="">
+    <i class="icon ion-edit"></i>
+    Login
+  </a>
+  </div>
+</span> 
         </ion-header-bar>
 
     <ion-content class="stable-bg has-header has-expanded-header menu-content">
       <ion-list class="menu-list">
    <div class="list">
 
-  <a href="#" class="item item-icon-left menu-item">
+  <a ui-sref="app.home"  nav-clear menu-close  class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     Home
   </a>
-
-  <a href="#" class="item item-icon-left menu-item">
-    <i class="icon ion-chevron-right"></i>
-    Search
-  </a>
-
-  <a href="#" class="item item-icon-left menu-item">
+ 
+  <a ui-sref="app.feeds" nav-clear menu-close class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     My Feeds
   </a>
+  <a ui-sref="app.user-profile" nav-clear menu-close class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    My Profile
+  </a>
 
-  <a href="#" class="item item-icon-left menu-item">
+  <a nav-clear menu-close ui-sref="app.followedCelebs" class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     Followed Celebrities
   </a>
-  <a href="#" class="item item-icon-left menu-item">
+  <a ui-sref="app.chat-listing" nav-clear menu-close class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     My Messages
   </a>
-  <a href="#" class="item item-icon-left menu-item">
+  <a ui-sref="app.contact" nav-clear menu-close class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     Contact
   </a>
-  <a href="#" class="item item-icon-left menu-item">
+  <a ui-sref="app.about" ng-click="closePopover()" nav-clear menu-close class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     About Radiuz8
   </a>
-  <a href="#" class="item item-icon-left menu-item" ng-click="login()">
+  <a ui-sref="app.terms" nav-clear menu-close class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    Terms and Condition
+  </a>
+  <a role="link" class="item item-icon-left menu-item" nav-clear menu-close ng-click="loginFromMenu()" ng-if="!isLoggedIn">
     <i class="icon ion-chevron-right"></i>
     Login
+  </a>
+  <a role="link" class="item item-icon-left menu-item" nav-clear menu-close ng-click="logout()" ng-if="isLoggedIn">
+    <i class="icon ion-chevron-right"></i>
+    Logout
   </a>
 
 </div>

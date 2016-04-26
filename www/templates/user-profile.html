@@ -1,0 +1,81 @@
+<ion-view>
+ <ion-nav-title>
+      <img ng-src="img/logo.png" class="header-logo">
+ </ion-nav-title>
+    <ion-content >
+        <div class="hero custom-hero" style="background-image: url('img/bgp.png'); background-color: #0A0A0A; background-size: initial">
+            <div class="content user-content">
+                <div class="avatar user-avatar" style="background-image: url('img/user-icon.png');"></div>
+                <div class="user-title">
+                <h3><a class="light">{{userInfo.user_meta.first_name[0]}}  {{userInfo.user_meta.last_name[0]}}</a></h3>
+                <h4>{{userInfo.user_email}}</h4>
+                </div>
+            </div>
+        </div>
+
+    <span>
+        <h4 class="content  profile-head double-padding-x">My Profile</h4>
+      <form name="userProfile" ng-submit="saveUser(userInfo)">
+          <div class="list">
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">First Name*</span>
+    <input type="text" ng-model="userInfo.user_meta.first_name[0]" required placeholder="Enter First Name">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">Last Name*</span>
+    <input type="text" ng-model="userInfo.user_meta.last_name[0]" required placeholder="Enter Last Name">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">Email*</span>
+    <input type="email" ng-model="userInfo.user_email" required  placeholder="Enter valid Email">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">Mobile*</span>
+    <input type="text"  ng-model="userInfo.user_meta.phone[0]" required  placeholder="Enter valid -">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">Address*</span>
+    <input type="text" ng-model="userInfo.user_meta.address[0]" required placeholder="Enter Address">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">City*</span>
+    <input type="text" ng-model="userInfo.user_meta.city[0]" required placeholder="Enter City">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">State*</span>
+    <input type="text" ng-model="userInfo.user_meta.state[0]" required placeholder="Enter State">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">Postal Code*</span>
+    <input type="text" ng-model="userInfo.user_meta.postal_code[0]" required placeholder="Enter Postal Code">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">Country*</span>
+    <input type="text" ng-model="userInfo.user_meta.country[0]" required placeholder="Enter Country">
+  </label> 
+</div>
+
+ <div class="row">
+  <a class="button  w100 radiuz-primary line-h50" type="submit" >Update Profile</a>
+</div> 
+
+      </form>
+<h4 class="content  profile-head double-padding-x">Change Password</h4>
+ 
+          <div class="list">
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">Current Password*</span>
+    <input type="text" ng-model="password.new" placeholder="Enter Current Password">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label fz14">New Password*</span>
+    <input type="text" ng-model="password.cnew" placeholder="Enter New Password">
+  </label>
+ </div>
+ <div class="row">
+  <a class="button  w100 radiuz-primary line-h50"  >Change Password</a>
+</div> 
+    </span>
+ 
+    </ion-content>
+</ion-view>

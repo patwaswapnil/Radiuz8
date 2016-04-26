@@ -4,19 +4,160 @@
     </ion-nav-title>
     <ion-content>
         <div class="cover-item-wrapper cover-detail-wrapper">
-            <div class="cover-item cover-item-detail">
+            <div class="cover-item cover-item-detail" style="background-image:url('{{celebrity.cover_photo.url}}')">
                 <div class="cover-overlay">
-                  	<div class="celeb-img-detail">
-                  		<img ng-src="img/kohli.jpg">
-                  	</div>
-                  	<div class="celeb-info-detail">
-                  		<h2>Virat Kohli</h2>
-                  		<p>Cricket, Sports</p>
-                  		<p>27, Male. Mumbai</p>
-                  		<p><a ng-click="openlink()">www.imvirat.com</a></p>
-                  	</div>
+                    <div class="celeb-img-detail">
+                        <img ng-src="{{::celebrity.img}}">
+                    </div>
+                    <div class="celeb-info-detail">
+                        <h2 class="mb2"> {{::celebrity.title}}</h2>
+                        <p class="mb2">{{::celebrity.profession}}</p>
+                        <p class="mb2">{{::celebrity.age}}<span ng-if="celebrity.age">,</span> {{::celebrity.gender}}<span ng-if="celebrity.gender"><span ng-if="celebrity.from">.</span></span> {{::celebrity.from}}</p>
+                        <p class="mb2"><a ng-click="openLink(celebrity.website)">{{::celebrity.website}}</a></p>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="tabs tabs-dark tab-radius static">
+            <a class="tab-item uppercase" ng-if="!celebrity.isFollow" ng-click="follow($event, celebrity.id, celebrity.title)">
+                 FOLLOW
+            </a>
+            <a class="tab-item uppercase" ng-if="celebrity.isFollow" ng-click="follow($event, celebrity.id, celebrity.title)">
+                UNFOLLOW
+            </a>
+            <a class="tab-item uppercase" ui-sref="app.chat({celebId: celebrity.id, name:celebrity.title})" >
+                 MESSAGE
+            </a>
+            <a class="tab-item uppercase" ui-sref="app.contact-celeb({celebId: celebrity.id, name:celebrity.title})">
+                 CONTACT
+            </a>
+        </div>
+        <div>
+            <ion-scroll direction="x" class="item ion-sc">
+                <span ng-class="activePan == 'social' ? 'active-item' : 'sub-menu-item'"  ng-click="updatePan('social')">SOCIAL REACH</span>
+                <span ng-class="activePan == 'award' ? 'active-item' : 'sub-menu-item'"   ng-click="updatePan('award')">HIGHLIGHTS & AWARDS</span>
+                <span ng-class="activePan == 'video' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.video_link" ng-click="updatePan('video')">VIDEO</span>
+                <span ng-class="activePan == 'summ' ? 'active-item' : 'sub-menu-item'"  ng-click="updatePan('summ')">SUMMARY</span>
+                <span ng-class="activePan == 'news' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.news.channel.item.length" ng-click="updatePan('news')">NEWS</span>
+                <span ng-class="activePan == 'gallery' ? 'active-item' : 'sub-menu-item'" ng-if="items.length" ng-click="updatePan('gallery')">GALLERY</span>
+                <span ng-class="activePan == 'brand' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.brands.length" ng-click="updatePan('brand')">BRANDS</span>
+                <span ng-class="activePan == 'review' ? 'active-item' : 'sub-menu-item'"   ng-click="updatePan('review')">REVIEWS</span>
+                <span ng-class="activePan == 'tags' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.tags.length" ng-click="updatePan('tags')">TAGS</span>
+                <span ng-class="activePan == 'rela' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.related.celebs.length" ng-click="updatePan('rela')">RELATED CELEBRITIES</span>
+            </ion-scroll>
+        </div>
+        <div class="wrapper">
+            <div class="summery padding" ng-if="activePan == 'award'">
+                <div class="list-awards" ng-bind-html="celebrity.highlights_awards">
+                </div>
+            </div>
+            <div class="wrapper" ng-if="activePan == 'brand'">
+                <div class="brand">
+                    <ul class="list">
+                        <li class="item" ng-repeat="brand in celebrity.brands">
+                            {{::brand.name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="wrapper" ng-if="activePan == 'gallery'">
+                <ion-gallery ion-gallery-items="items"></ion-gallery>
+            </div>
+            <div class="wrapper" ng-if="activePan == 'news'">
+                <div class="news">
+                    <ul class="list">
+                        <li class="item" ng-repeat="news in celebrity.news.channel.item">
+                            <a ng-href="{{::news.link}}" ng-click="openLink(news.link)"> {{::news.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="wrapper" ng-if="activePan == 'tags'">
+                <div class="tags">
+                    <ul class="list">
+                        <li class="item" ng-repeat="tag in celebrity.tags">
+                            {{::tag.name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="wrapper" ng-if="activePan == 'review'">
+                <div class="reviews">
+                    <div class="list card" ng-repeat="review in celebrity.reviews">
+                        <div class="item item-avatar">
+                            <img src="img/user-icon.png" alt="">
+                            <h2>{{::review.by}}</h2>
+                            <div class="rating row ">
+                                <div class="stars">
+                                    <i ng-style="set_star(review.stars)"></i>
+                                </div>
+                            </div>
+                            <p>{{::review.date}}</p>
+                        </div>
+                        <div class="item  padding">
+                            {{::review.title}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper" ng-if="activePan == 'rela'">
+                <div class="related">
+                    <div class="list list-listing" ng-repeat="relatedCeleb in celebrity.related.celebs">
+                        <span class="item item-thumbnail-left">
+       <a class="celeb-img-a" ng-href="{{getSegment(relatedCeleb.permalink)}}"><img ng-src="{{::relatedCeleb.img}}" class="listing-img"></a> 
+      <a  ng-href="{{getSegment(relatedCeleb.permalink)}}" class="celeb-name"><h2>{{::relatedCeleb.title}}</h2> </a>
+      <p class="mt2">{{::relatedCeleb.age}}<span ng-if="relatedCeleb.age">, </span> {{::relatedCeleb.gender}}</p>
+                        <p>Social Reach: {{::relatedCeleb.reach}}</p>
+                        <button class="radiuz-button radiuz-primary" ng-if="!relatedCeleb.isFollow" ng-click="follow($event, $scope, relatedCeleb.id, relatedCeleb.title)">Follow</button>
+                        <button class="radiuz-button radiuz-primary" ng-if="relatedCeleb.isFollow" ng-click="follow($event, $scope, relatedCeleb.id, relatedCeleb.title)">Unfollow</button>
+
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapper" ng-if="activePan == 'social'">
+                <div class="reach">
+
+                    <div class="list">
+
+                        <a class="item item-icon-left" ng-click="openLink(celebrity.facebook_link)" ng-class="!celebrity.facebook_likes ? 'disabled-a' : ''">
+                            <i class="icon ion-social-facebook icon-fb"></i> Facebook
+                            <span class="item-note">
+      {{::celebrity.facebook_likes}}
+    </span>
+                        </a>
+                        <a class="item item-icon-left" ng-click="openLink(celebrity.twitter_link)" ng-class="!celebrity.twitter_followers ? 'disabled-a' : ''">
+                            <i class="icon ion-social-twitter icon-twitter"></i> Twitter
+                            <span class="item-note">
+      {{::celebrity.twitter_followers}}
+    </span>
+                        </a>
+                        <a class="item item-icon-left" ng-click="openLink(celebrity.google_plus_link)" ng-class="!celebrity.google_plus_followers ? 'disabled-a' : ''">
+                            <i class="icon ion-social-googleplus icon-gp"></i> Google Plus
+                            <span class="item-note">
+      {{::celebrity.google_plus_followers}}
+    </span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="wrapper padding" ng-if="activePan == 'summ'">
+                <div class="overview">
+                    <div class="justify" ng-bind-html="wiki"></div>
+                    <div class="read-more-sum"><button class="button read-more-btn" ng-click="openLink(celebrity.wikipedia_link)">
+Read More
+</button> </div>
+                </div>
+            </div>
+            <div class="wrapper padding" ng-if="activePan == 'video'">
+                <div class="video">
+                    <iframe width="100%" height="300px" ng-src="{{celebrity.video_link}}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
         </div>
     </ion-content>
 </ion-view>

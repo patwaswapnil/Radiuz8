@@ -1,15 +1,18 @@
 // Ionic radiuz8 App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'radiuz8' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'radiuz8.controllers' is found in controllers.js
-angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8.services', 'angularMoment'])
+var domain = 'http://celebrity-connect.cruxservers.in/api/?action=';
+angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8.services', 'radiuz8.directives', 'ion-autocomplete', 'angularMoment', 'ngtweet', 'ion-gallery'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+     setTimeout(function() {
+      try { 
+        navigator.splashscreen.hide();
+      } catch(e) { 
+        console.log('It will work on app only');
+      }
+    }, 300);
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
@@ -21,10 +24,11 @@ angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8
     }
   });
 })
+.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
+  
+ $sceDelegateProvider.resourceUrlWhitelist(['self', new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$')]);
 
-.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
     .state('app', {
     url: '/app',
     abstract: true,
@@ -50,7 +54,7 @@ angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8
     }
   })
   .state('app.celebrity-detail', {
-    url: '/celebrity-detail',
+    url: '/celebrity-detail/:name',
     views: {
       'menuContent': {
         templateUrl: 'templates/celebrity-detail.html',
@@ -68,14 +72,76 @@ angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8
     }
   })
   .state('app.chat', {
-    url: '/chat',
+    url: '/chat/:celebId?name',
     views: {
       'menuContent': {
         templateUrl: 'templates/chat.html',
         controller: 'ChatCtrl'
       }
     }
-  });
+  })
+  .state('app.user-profile', {
+    url: '/user-profile',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/user-profile.html',
+        controller: 'userProfileCtrl'
+      }
+    }
+  })
+  .state('app.about', {
+    url: '/about',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/about.html' 
+      }
+    }
+  })
+  .state('app.terms', {
+    url: '/terms',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/terms.html' 
+      }
+    }
+  })
+  .state('app.contact-celeb', {
+    url: '/contact-celeb/:celebId?name',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/contact-celeb.html',
+        controller: 'ContactCelebCtrl' 
+      }
+    }
+  })
+  .state('app.contact', {
+    url: '/contact',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/contact.html' 
+      }
+    }
+  })
+  .state('app.feeds', {
+    cache: false,
+    url: '/feeds',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/feeds.html',
+        controller: 'FeedsCtrl'
+      }
+    }
+  })
+  .state('app.followedCelebs', {
+    cache: false,
+    url: '/followed-celebrity',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/followed-celeb.html',
+        controller: 'FollowedCelebCtrl'
+      }
+    }
+  })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
-});
+}) 

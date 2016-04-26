@@ -4,17 +4,22 @@
     <ion-content>
       <ion-list>
  
-  <a href="#" class="item item-icon-left menu-item">
+  <a ui-sref="app.user-profile" ng-click="popover.hide()" class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
-    Home
+    User Profile
+  </a>
+ 
+  <a ui-sref="app.user-profile" ng-click="popover.hide()" class="item item-icon-left menu-item">
+    <i class="icon ion-chevron-right"></i>
+    User Profile
   </a>
 
-  <a href="#" class="item item-icon-left menu-item">
+  <a ng-click="popover.hide()" class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     Search
   </a>
 
-  <a href="#" class="item item-icon-left menu-item">
+  <a  ui-sref="app.feeds" ng-click="popover.hide()" class="item item-icon-left menu-item">
     <i class="icon ion-chevron-right"></i>
     My Feeds
   </a> 

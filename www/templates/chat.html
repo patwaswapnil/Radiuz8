@@ -1,61 +1,44 @@
 
        <ion-view id="chat" cache-view="false"> 
-          <ion-content  class="has-header has-footer chat-bg"> 
-              <div ng-repeat="message in messages.messages | orderBy:'date'" class="message-wrapper">
+ <ion-nav-title>
+   {{::chattingWith}} 
+ </ion-nav-title>
+<ion-nav-buttons side="right">
+      <button class="button button-icon button-clear ion-refresh" ng-click="getMessages()">
+      </button>
+    </ion-nav-buttons>
+          <ion-content  class="has-header has-footer chat-bg" > 
+                <ion-refresher pulling-text="Pull to refresh..." on-refresh="getMessages()"> </ion-refresher>
+          
+              <div ng-repeat="message in messages | orderBy:'created_at':false" class="message-wrapper">
       
-                  <div  ng-if="$even">
+                  <div>
                       
-                    <img ng-click="viewProfile(message)" class="profile-pic left" 
-                          ng-src="img/srk.jpg" />
+                    <img class="profile-pic" ng-class="data.userId == message.from ? 'right' : 'left'" ng-src="{{data.userId == message.from ?  'img/user-icon.png':  message.img}}" />
       
-                      <div class="chat-bubble left">
-      
+                      <div class="chat-bubble" ng-class="data.userId == message.from ? 'right' : 'left'">
                           <div class="message">
-                          {{message.text}}
+                          {{::message.msg}}
                           </div>
-      
                           <div class="message-detail">
-                              <span ng-click="viewProfile(message)" 
-                                    class="bold">Shahrukh Khan</span>, 
-                              <span am-time-ago="message.date"></span>
+                              <span class="bold">{{::message.fromName | capitalize}}</span>, 
+                              <span am-time-ago="message.created_at"></span>
                           </div>
-      
                       </div>
-                  </div>
-      
-                  <div  ng-if="$odd">
-                    
-                       <img ng-click="viewProfile(message)" class="profile-pic right" 
-                          ng-src="img/dhoni.jpg" />
-                    
-                      <div class="chat-bubble right">
-      
-                          <div class="message" >
-                          {{message.text}}
-                          </div>
-      
-                          <div class="message-detail">
-                              <span ng-click="viewProfile(message)" 
-                                  class="bold">MS Dhoni</span>, 
-                              <span am-time-ago="message.date"></span>
-                          </div>
-      
-                      </div>
-                    
-                  </div>
+                  </div> 
       
                   <div class="cf"></div>  
       
               </div>
           </ion-content>
       
-          <form name="sendMessageForm" ng-submit="sendMessage(sendMessageForm)" novalidate>
+          <form name="sendMessageForm" ng-submit="sendMessage(input.message, chatWithId)" novalidate>
               <ion-footer-bar class="bar-stable item-input-inset message-footer" keyboard-attach>
                   <label class="item-input-wrapper">
-                      <textarea ng-model="input.message" value="" placeholder="Send {{toUser.username}} a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+                      <textarea ng-model="input.message" class="chat-input" value="" placeholder="Send {{chattingWith}} a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
                   </label>
-                  <div class="footer-btn-wrap">
-                    <button class="button button-icon icon ion-android-send footer-btn" type="submit"
+                  <div class="footer-btn-wrap footer-btn-wrap1">
+                    <button class="button button-icon icon ion-android-send footer-btn btn-send" type="submit"
                         ng-disabled="!input.message || input.message === ''">
                     </button>
                   </div>

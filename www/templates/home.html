@@ -3,22 +3,23 @@
       <img ng-src="img/logo.png" class="header-logo">
  </ion-nav-title>
   <ion-content>
-    <div class="cover-item-wrapper">
+    <div class="cover-item-wrapper cover-home">
 		<div class="cover-item">
 		<div class="cover-overlay">
 			<div class="cover-input-wrapper">
-				<input type="search" class="cover-search-input" placeholder="Search ex Amir Khan, PK etc.">
+				<!-- <input type="search"  class="cover-search-input" placeholder="Search ex Amir Khan, PK etc."> -->
+        <input  ion-autocomplete type="search" name="location" readonly="readonly" class="ion-autocomplete cover-search-input" autocomplete="on" ng-model="modelFilter" loading-icon="ios-small" item-value-key="label" item-view-value-key="label" items-method="getTestItems(query)" items-method-value-key="items" items-clicked-method="clickedMethod(callback)" placeholder="Search ex Amir Khan, PK etc." max-selected-items="1" required/>
 			</div>
 		 	<div class="cover-input-text">
-				<div class="cover-heading-text">Howdy! Guest</div>
-				<a class="cover-feed-text"> My Feeds</a>
+        <div class="cover-heading-text">Howdy! {{isLoggedIn == true ? user.display_name : 'Guest' | capitalize}}</div> 
+				<a class="cover-feed-text" ui-sref="app.feeds"> My Feeds</a>
 			</div>  
 		</div>
 		</div>
     </div> 
 
   <div class="row">
-  <a class="button  w100 radiuz-primary">View All Celebrities</a>
+  <a class="button  w100 radiuz-primary line-h50"  ui-sref="app.celebrity-listing">View All Celebrities</a>
 </div> 
    <div class="row pt12">
             <div class="col-60">
@@ -30,71 +31,20 @@
             </div>
         </div>
 <div class="celebrity-listing home-listing">
-<div class="list list-listing">
+<div class="list list-listing" ng-repeat="topCeleb in topCelebs | limitTo:10">
 
-    <span class="item item-thumbnail-left"  >
-       <a class="celeb-img-a"  ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"></a> 
-  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2> </a>
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 1256K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-
-    </span>
-</div>
-<div class="list list-listing">
-
-    <span class="item item-thumbnail-left"  >
-      <a class="celeb-img-a"  ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"></a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
-      <p class="mt2">Actor</p>
-      <p>Social Reach: 3255K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-
-</div>
-<div class="list list-listing">
-
-    <span class="item item-thumbnail-left"  >
-      <a class="celeb-img-a"  ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"></a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 4555K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-</div>
-<div class="list list-listing">
-
-    <span class="item item-thumbnail-left"  >
-       <a class="celeb-img-a"  ui-sref="app.celebrity-detail"><img ng-src="img/kohli.jpg" class="listing-img"></a> 
-  	  <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Virat Kohli</h2> </a>
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 1256K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
+    <span class="item item-thumbnail-left">
+       <a class="celeb-img-a" ng-href="{{getSegment(topCeleb.permalink)}}"><img ng-src="{{::topCeleb.img}}" class="listing-img"></a> 
+  	  <a  ng-href="{{getSegment(topCeleb.permalink)}}" class="celeb-name"><h2>{{::topCeleb.title}}</h2> </a>
+      <p class="mt2">{{::topCeleb.age}}<span ng-if="topCeleb.age">, </span>{{::topCeleb.gender}}</p>
+      <p>Social Reach: {{::topCeleb.reach}}</p>
+      <button class="radiuz-button radiuz-primary" ng-if="!topCeleb.isFollow" ng-click="follow($event, topCeleb.id, topCeleb.title)">Follow</button>
+      <button class="radiuz-button radiuz-primary" ng-if="topCeleb.isFollow" ng-click="follow($event, topCeleb.id, topCeleb.title)">Unfollow</button>
 
     </span>
 </div>
-<div class="list list-listing">
-
-    <span class="item item-thumbnail-left"  >
-      <a class="celeb-img-a"  ui-sref="app.celebrity-detail"><img ng-src="img/srk.jpg" class="listing-img"></a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>Shahrukh Khan</h2></a>
-      <p class="mt2">Actor</p>
-      <p>Social Reach: 3255K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
 
 </div>
-<div class="list list-listing">
-
-    <span class="item item-thumbnail-left"  >
-      <a class="celeb-img-a"  ui-sref="app.celebrity-detail"><img ng-src="img/Dhoni.jpg" class="listing-img"></a>
-      <a  ui-sref="app.celebrity-detail" class="celeb-name"><h2>M.S. Dhoni</h2></a>
-      <p class="mt2">Cricketer</p>
-      <p>Social Reach: 4555K</p>
-      <button class="radiuz-button radiuz-primary">Follow</button>
-    </span>
-</div>
-</div>
- 
+  
   </ion-content>
 </ion-view>

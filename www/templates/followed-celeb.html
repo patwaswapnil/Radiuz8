@@ -1,0 +1,29 @@
+<ion-view>
+ <ion-nav-title>
+      <img ng-src="img/logo.png" class="header-logo">
+ </ion-nav-title>
+  <ion-content>
+ 
+   <div class="row pt12">
+            <div class="col-60">
+                <h3 class="listing-title">Your Followed Celebrities</h3>
+            </div> 
+        </div>
+<div class="celebrity-listing home-listing">
+<div class="list list-listing" ng-repeat="follwedCeleb in follwedCelebs">
+
+    <span class="item item-thumbnail-left">
+       <a class="celeb-img-a" ng-href="{{getSegment(follwedCeleb.permalink)}}"><img ng-src="{{::follwedCeleb.img}}" class="listing-img"></a> 
+  	  <a  ng-href="{{getSegment(follwedCeleb.permalink)}}" class="celeb-name"><h2>{{::follwedCeleb.title}}</h2> </a>
+      <p class="mt2">{{::follwedCeleb.age}}<span ng-if="follwedCeleb.age">, </span>{{::follwedCeleb.gender}}</p>
+      <p>Social Reach: {{::follwedCeleb.reach}}</p>
+      <button class="radiuz-button radiuz-primary" ng-if="!follwedCeleb.isFollow" ng-click="follow($event, follwedCeleb.id, follwedCeleb.title)">Follow</button>
+      <button class="radiuz-button radiuz-primary" ng-if="follwedCeleb.isFollow" ng-click="follow($event, follwedCeleb.id, follwedCeleb.title)">Unfollow</button>
+
+    </span>
+</div>
+
+</div>
+  
+  </ion-content>
+</ion-view>

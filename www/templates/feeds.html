@@ -1,0 +1,19 @@
+<ion-view hide-menu-button="true" cache-view="false">
+ <ion-nav-title>
+      <img ng-src="img/logo.png" class="header-logo">
+ </ion-nav-title>
+  <ion-content>
+ <div class="list">
+
+  <div ng-repeat="news in tweets">
+            
+
+            <div ng-if="news.source == 'Twitter'" class="tweet-container">
+			
+                <twitter-widget twitter-widget-id="news.tweet_id" data-click-to-open-target="https://google.co.in" twitter-widget-options="{'align': 'center'}"></twitter-widget>
+            </div>
+        </div>
+
+    </div>
+  </ion-content>
+</ion-view>
