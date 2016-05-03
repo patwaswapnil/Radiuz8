@@ -17,11 +17,14 @@ angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
+    } 
+      try {
+    if (window.StatusBar) { 
       StatusBar.styleDefault();
-    }
+    } 
+  } catch(e) {
+          console.log('styleDefault work on device only');
+      }
   });
 })
 .config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
@@ -118,10 +121,11 @@ angular.module('radiuz8', ['ionic', 'ngCordova', 'radiuz8.controllers', 'radiuz8
     url: '/contact',
     views: {
       'menuContent': {
-        templateUrl: 'templates/contact.html' 
+        templateUrl: 'templates/contact.html',
+        controller: 'contactCtrl' 
       }
     }
-  })
+  }) 
   .state('app.feeds', {
     cache: false,
     url: '/feeds',

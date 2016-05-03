@@ -5,7 +5,7 @@
     <ion-subheader-bar class="bar bar-subheader">
         <div class="row">
             <div class="col-60">
-                <h3 class="listing-title">Film/TV Celebrities</h3>
+                <h3 class="listing-title">Celebrities on Radiuz8</h3>
             </div>
             <div class="col-20 filter-btn-wrap">
                 <button class="button button-icon button-clear ion-search"></button>
@@ -23,8 +23,8 @@
       <a   ng-href="{{getSegment(celeb.permalink)}}" class="celeb-name"><h2>{{::celeb.title}}</h2></a> 
       <p class="mt2">{{::celeb.age}}<span ng-if="celeb.age">,</span> {{::celeb.gender}}</p>
                 <p>Social Reach: {{::celeb.reach}}</p>
-                <button class="radiuz-button radiuz-primary" ng-if="!isFollow" ng-click="follow($event, celeb.id, celeb.title)">Follow</button>
-                <button class="radiuz-button radiuz-primary" ng-if="isFollow" ng-click="follow($event, celeb.id, celeb.title)">Unfollow</button>
+                <button class="radiuz-button radiuz-primary" ng-if="!celeb.isFollow" ng-click="follow($event, celeb.id, celeb.title)">Follow</button>
+                <button class="radiuz-button radiuz-primary" ng-if="celeb.isFollow" ng-click="follow($event, celeb.id, celeb.title)">Unfollow</button>
                 </span>
             </div>
             <div class="txt-center" ng-if="!canLoadMore">
@@ -38,8 +38,8 @@
     <ion-modal-view>
         <ion-header-bar class="bar bar-dark">
             <h1 class="title">Filter</h1>
-            <button class="button button-icon button-clear ion-close-round" ng-click="closeFilters()" menu-toggle="right">
-        </button>
+           <button class="button button-icon button-clear ion-close-round" ng-click="closeFilters()" menu-toggle="right">
+        </button> 
         </ion-header-bar>
         <ion-content has-bouncing="false" class="filter-modal">
             <div class="row pm0">
@@ -65,7 +65,7 @@
   </a>
                         <a class="item noborder" ng-click="showCat = 'pricing'">
     Pricing  
-  </a> {{filters}} </div>
+  </a> </div>
                 </div>
                 <div class="right-panel col-67 white-bg">
                     <span ng-show="showCat == 'cat'">
@@ -89,17 +89,20 @@
                     </span>
                     <span ng-show="showCat == 'reach'">
                     <ion-list>
-                        <ion-radio class="noborder" ng-model="choice" ng-value="0" ng-click="">High to Low</ion-radio>
-                        <ion-radio class="noborder" ng-model="choice" ng-value="1" ng-click="">Low to High</ion-radio> 
+                        <ion-radio class="noborder" ng-model="filters.sort" ng-value="0" ng-click="filterCeleb()">Low to High</ion-radio> 
+                        <ion-radio class="noborder" ng-model="filters.sort" ng-value="1" ng-click="filterCeleb()">High to Low</ion-radio>
                     </ion-list> 
                 </span>
                     <span ng-show="showCat == 'age'">
                     <ion-list>
                         <div class="">
-                            <div class="col"><input type="text" class="filter-input" placeholder="Min age" /></div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Max age" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.age_min" class="filter-input" placeholder="Min age" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.age_max" class="filter-input" placeholder="Max age" /></div>
                         </div>
                     </ion-list> 
+                    <div class="m4">
+                        <a class="button  w100 radiuz-primary line-h50" ng-disabled="!filters.filters.age_min || !filters.filters.age_max" ng-click="filterCeleb()" >Apply</a>
+                    </div>
                 </span>
                     <span ng-show="showCat == 'gender'">
                     <ion-list> 
@@ -111,42 +114,48 @@
                     <span ng-show="showCat == 'pricing'">
                     <ion-list> 
                       <div class="">
-                            <div class="col"><input type="text" class="filter-input" placeholder="Min price" /></div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Max price" /></div>
+                            <div class="col"><input type="text" ng-pattern=" /^[0-9]{1,7}$/" ng-model="filters.filters.price_min"  class="filter-input" placeholder="Min price" /></div>
+                            <div class="col"><input type="text" ng-pattern=" /^[0-9]{1,7}$/" ng-model="filters.filters.price_max"  class="filter-input" placeholder="Max price" /></div>
                         </div>
                     </ion-list> 
+                     <div class="m4">
+                        <a class="button  w100 radiuz-primary line-h50" ng-disabled="!filters.filters.price_min || !filters.filters.price_max" ng-click="filterCeleb()" >Apply</a>
+                    </div> 
                 </span>
                     <span ng-show="showCat == 'socialfollow'">
                     <ion-list > 
                         <div class="heading-sub">Facebook</div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.fb_min" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.fb_max" class="filter-input" placeholder="Max" /></div>
                        
                         <div class="heading-sub">Twitter</div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.tw_min" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.tw_min" class="filter-input" placeholder="Max" /></div>
                         
                         <div class="heading-sub">Instagram</div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.insta_min" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.insta_max" class="filter-input" placeholder="Max" /></div>
                          
                         <div class="heading-sub">YouTube</div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.youtube_min" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.youtube_max" class="filter-input" placeholder="Max" /></div>
                         
                         <div class="heading-sub">Google Plus</div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Min" /></div>
-                            <div class="col"><input type="text" class="filter-input" placeholder="Max" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.google_min" class="filter-input" placeholder="Min" /></div>
+                            <div class="col"><input type="text" ng-model="filters.filters.google_max" class="filter-input" placeholder="Max" /></div>
                         
                     </ion-list> 
+                    <div class="m4">
+                        <a class="button  w100 radiuz-primary line-h50"  ng-click="filterCeleb()">Apply</a>
+                    </div>
                 </span>
                 </div>
             </div>
 
         </ion-content>
         <ion-footer-bar class="bar bar-footer bar-dark">
-            <button class="button button-clear">Clear </button>
-            <button class="button button-clear">Apply</button>
+            <button class="button   ml3" ng-click="filterCeleb('clear')">Clear Filter(s)</button>
+            <button class="button   mt-4" ng-click="closeFilters()">Done</button>
 
         </ion-footer-bar>
     </ion-modal-view>

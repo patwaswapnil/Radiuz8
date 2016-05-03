@@ -257,7 +257,7 @@ a.celeb-name {
 }
 .celeb-img-detail{
 	text-align: center;
- 	padding-top: 20px;
+ 	padding-top: 15px;
 }
 .celeb-info-detail{
 	text-align: center;
@@ -1478,11 +1478,11 @@ a.autolinker {
         border-bottom: 1px solid green !important; 
 }
 .validation-error {
-        color: red;
+    color: red;
     font-weight: bold;
     /* position: absolute; */
-    margin-top: 10px;
-    margin-bottom: -6px;
+    margin-left: 6px;
+    margin-top: -22px !important;
 }
 .button.button:disabled{
   background-color: red !important;
@@ -1503,4 +1503,13 @@ a.autolinker {
   display: inline-block;
     vertical-align: middle; 
     margin-left: 15px;
+}
+.m4 {
+  margin: 4px !important;
+}
+.mt-4{
+  margin-top: -4px;
+}
+.ml3{
+  margin-left: 3px;
 }

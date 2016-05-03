@@ -6,48 +6,48 @@
      <span>
         <h4 class="content  profile-head double-padding-x">Contact </h4>
         <p class="fz12 profile-head">If you want to claim your profile / wish to add your profile / have any query / comments, please</p>
-   <form name="userProfile">
+   <form name="contact" ng-submit="sendMail()">
           <div class="list">
   <label class="item item-input item-stacked-label">
     <span class="input-label fz14"> Name*</span>
-    <input type="text" placeholder="Enter Name">
+    <input type="text" name="pname" required="required" ng-class="contact.pname.$touched && contact.pname.$invalid ? 'error-border' : ''" ng-model="message.pname" placeholder="Enter Name">
   </label> 
   <label class="item item-input item-stacked-label">
     <span class="input-label fz14">Email*</span>
-    <input type="email" placeholder="Enter valid Email">
+    <input type="email" name="email" required="required" ng-class="contact.email.$touched && contact.email.$invalid ? 'error-border' : ''" ng-model="message.email" placeholder="Enter valid Email">
   </label>
   <label class="item item-input item-stacked-label">
     <span class="input-label fz14">Mobile*</span>
-    <input type="email" placeholder="Enter valid Mobile Number">
+    <input type="text" name="phone" required="required" ng-class="contact.phone.$touched && contact.phone.$invalid ? 'error-border' : ''" ng-model="message.phone" placeholder="Enter valid Mobile Number">
   </label>
   <label class="item item-input item-stacked-label">
     <span class="input-label fz14">Subject*</span>
-    <input type="text" placeholder="Enter Subject">
+    <input type="text" name="subject" required="required" ng-class="contact.subject.$touched && contact.subject.$invalid ? 'error-border' : ''" ng-model="message.subject" placeholder="Enter Subject">
   </label>
 
   <label class="item item-input item-select">
     <div class="input-label">
       Service*
     </div>
-    <select class="bg-f4">
-    <option >Select an option</option>
-      <option>Claim Profile</option>
-      <option>Add New Profile</option>
-      <option>General Query</option>
-      <option>Support</option>
-      <option>Other</option>
+    <select class="bg-f4" name="service" required="required" ng-class="contact.service.$touched && contact.service.$invalid ? 'error-border' : ''" ng-model="message.service">
+    <option value="">Select an option</option>
+      <option value="Claim Profile">Claim Profile</option>
+      <option value="Add New Profile">Add New Profile</option>
+      <option value="General Query">General Query</option>
+      <option value="Support">Support</option>
+      <option value="Other">Other</option>
     </select>
   </label>
 
 
   <label class="item item-input item-stacked-label">
     <span class="input-label fz14">Message*</span>
-    <textarea placeholder="Your Message" class="textarea-height"></textarea>
+    <textarea placeholder="Your Message" required="required" ng-class="contact.message.$touched && contact.message.$invalid ? 'error-border' : ''" ng-model="message.message" name="message" class="textarea-height"></textarea>
   </label> 
 </div>
 
  <div class="row">
-  <a class="button  w100 radiuz-primary line-h50"  >Send</a>
+  <button class="button  w100 radiuz-primary line-h50" type="submit" ng-disabled="contact.$invalid"  >Send</button>
 </div> 
 
       </form>

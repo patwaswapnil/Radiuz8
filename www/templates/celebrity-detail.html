@@ -10,10 +10,11 @@
                         <img ng-src="{{::celebrity.img}}">
                     </div>
                     <div class="celeb-info-detail">
-                        <h2 class="mb2"> {{::celebrity.title}}</h2>
-                        <p class="mb2">{{::celebrity.profession}}</p>
-                        <p class="mb2">{{::celebrity.age}}<span ng-if="celebrity.age">,</span> {{::celebrity.gender}}<span ng-if="celebrity.gender"><span ng-if="celebrity.from">.</span></span> {{::celebrity.from}}</p>
-                        <p class="mb2"><a ng-click="openLink(celebrity.website)">{{::celebrity.website}}</a></p>
+                        <h2 class="mb0"> {{::celebrity.title}}</h2>
+                        <p class="mb0 bold">{{::celebrity.sub_title}}</p>
+                        <p class="mb0">{{::celebrity.profession}}</p>
+                        <p class="mb0">{{::celebrity.age}}<span ng-if="celebrity.age">,</span> {{::celebrity.gender}}<span ng-if="celebrity.gender"><span ng-if="celebrity.from">.</span></span> {{::celebrity.from}}</p>
+                        <p class="mb0"><a ng-click="openLink(celebrity.website)">{{::celebrity.website}}</a></p>
                     </div>
                 </div>
             </div>

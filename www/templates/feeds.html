@@ -5,8 +5,26 @@
   <ion-content>
  <div class="list">
 
+
   <div ng-repeat="news in tweets">
-            
+     <div class="list card" ng-if="news.source == 'Google News'">
+
+  <div class="item item-avatar">
+    <img ng-src="{{news.img}}">
+    <h2>{{news.by}}</h2>
+    <p>@Google News</p>
+    <p>{{ news.pubDate}}</p>
+  </div>
+
+  <div class="item item-body">
+     
+    <p ng-bind-html="news.description " ng-click="openLink(news.link)"> 
+    </p> 
+  </div>
+
+</div>
+
+      
 
             <div ng-if="news.source == 'Twitter'" class="tweet-container">
 			

@@ -4,11 +4,11 @@
    {{::chattingWith}} 
  </ion-nav-title>
 <ion-nav-buttons side="right">
-      <button class="button button-icon button-clear ion-refresh" ng-click="getMessages()">
+      <button class="button button-icon button-clear ion-refresh" ng-click="refreshList()">
       </button>
     </ion-nav-buttons>
           <ion-content  class="has-header has-footer chat-bg" > 
-                <ion-refresher pulling-text="Pull to refresh..." on-refresh="getMessages()"> </ion-refresher>
+                <ion-refresher pulling-text="Pull to refresh..." on-refresh="refreshList()"> </ion-refresher>
           
               <div ng-repeat="message in messages | orderBy:'created_at':false" class="message-wrapper">
       
