@@ -1,37 +1,29 @@
 <ion-view hide-menu-button="true" cache-view="false">
- <ion-nav-title>
-      <img ng-src="img/logo.png" class="header-logo">
- </ion-nav-title>
-  <ion-content>
- <div class="list">
-
-
-  <div ng-repeat="news in tweets">
-     <div class="list card" ng-if="news.source == 'Google News'">
-
-  <div class="item item-avatar">
-    <img ng-src="{{news.img}}">
-    <h2>{{news.by}}</h2>
-    <p>@Google News</p>
-    <p>{{ news.pubDate}}</p>
-  </div>
-
-  <div class="item item-body">
-     
-    <p ng-bind-html="news.description " ng-click="openLink(news.link)"> 
-    </p> 
-  </div>
-
-</div>
-
-      
-
-            <div ng-if="news.source == 'Twitter'" class="tweet-container">
-			
-                <twitter-widget twitter-widget-id="news.tweet_id" data-click-to-open-target="https://google.co.in" twitter-widget-options="{'align': 'center'}"></twitter-widget>
+    <ion-nav-title>
+        <img ng-src="img/logo.png" class="header-logo">
+    </ion-nav-title>
+    <ion-content>
+        <div class="list">
+            <div ng-repeat="news in tweets">
+                <div class="list card feed-item" ng-if="news.source == 'Google News'">
+                    <div class="item item-avatar" ng-init="news.replace('//', 'http://')">
+                        <img ng-src="{{news.img}}">
+                        <h2>{{news.by}}</h2>
+                        <p>@Google News</p>
+                        <p>{{ news.pubDate}}</p>
+                    </div>
+                    <div class="item item-body">
+                        <p ng-bind-html="news.description " ng-click="openLink(news.link, $event)">
+                        </p>
+                    </div>
+                </div>
+                <div ng-if="news.source == 'Twitter'" class="tweet-container">
+                    <twitter-widget twitter-widget-id="news.tweet_id" data-click-to-open-target="https://google.co.in" twitter-widget-options="{'align': 'center'}"></twitter-widget>
+                </div>
+            </div>
+            <div class="padding" ng-show="noFeed">
+             You Don't have any feed yet! Please start following Celebrities now and see the magic unveil ;)
             </div>
         </div>
-
-    </div>
-  </ion-content>
+    </ion-content>
 </ion-view>

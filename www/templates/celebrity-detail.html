@@ -36,13 +36,13 @@
         <div>
             <ion-scroll direction="x" class="item ion-sc">
                 <span ng-class="activePan == 'social' ? 'active-item' : 'sub-menu-item'"  ng-click="updatePan('social')">SOCIAL REACH</span>
-                <span ng-class="activePan == 'award' ? 'active-item' : 'sub-menu-item'"   ng-click="updatePan('award')">HIGHLIGHTS & AWARDS</span>
+                <span ng-class="activePan == 'award' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.highlights_awards"  ng-click="updatePan('award')">HIGHLIGHTS & AWARDS</span>
                 <span ng-class="activePan == 'video' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.video_link" ng-click="updatePan('video')">VIDEO</span>
-                <span ng-class="activePan == 'summ' ? 'active-item' : 'sub-menu-item'"  ng-click="updatePan('summ')">SUMMARY</span>
+                <span ng-class="activePan == 'summ' ? 'active-item' : 'sub-menu-item'"  ng-if="wiki" ng-click="updatePan('summ')">SUMMARY</span>
                 <span ng-class="activePan == 'news' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.news.channel.item.length" ng-click="updatePan('news')">NEWS</span>
                 <span ng-class="activePan == 'gallery' ? 'active-item' : 'sub-menu-item'" ng-if="items.length" ng-click="updatePan('gallery')">GALLERY</span>
                 <span ng-class="activePan == 'brand' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.brands.length" ng-click="updatePan('brand')">BRANDS</span>
-                <span ng-class="activePan == 'review' ? 'active-item' : 'sub-menu-item'"   ng-click="updatePan('review')">REVIEWS</span>
+                <span ng-class="activePan == 'review' ? 'active-item' : 'sub-menu-item'"  ng-if="celebrity.reviews.length"  ng-click="updatePan('review')">REVIEWS</span>
                 <span ng-class="activePan == 'tags' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.tags.length" ng-click="updatePan('tags')">TAGS</span>
                 <span ng-class="activePan == 'rela' ? 'active-item' : 'sub-menu-item'" ng-if="celebrity.related.celebs.length" ng-click="updatePan('rela')">RELATED CELEBRITIES</span>
             </ion-scroll>
@@ -140,6 +140,7 @@
       {{::celebrity.google_plus_followers}}
     </span>
                         </a>
+                       
                     </div>
                 </div>
 
@@ -148,9 +149,12 @@
             <div class="wrapper padding" ng-if="activePan == 'summ'">
                 <div class="overview">
                     <div class="justify" ng-bind-html="wiki"></div>
-                    <div class="read-more-sum"><button class="button read-more-btn" ng-click="openLink(celebrity.wikipedia_link)">
-Read More
-</button> </div>
+                  <div class="row">
+  <a class="button  w100 radiuz-primary line-h50" ng-click="openLink(celebrity.wikipedia_link)">Read More</a>
+</div> 
+ 
+
+  </div>
                 </div>
             </div>
             <div class="wrapper padding" ng-if="activePan == 'video'">

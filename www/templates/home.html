@@ -8,7 +8,8 @@
 		<div class="cover-overlay">
 			<div class="cover-input-wrapper">
 				<!-- <input type="search"  class="cover-search-input" placeholder="Search ex Amir Khan, PK etc."> -->
-        <input  ion-autocomplete type="search" name="location" readonly="readonly" class="ion-autocomplete cover-search-input" autocomplete="on" ng-model="modelFilter" loading-icon="ios-small" item-value-key="label" item-view-value-key="label" items-method="getTestItems(query)" items-method-value-key="items" items-clicked-method="clickedMethod(callback)" placeholder="Search ex Amir Khan, PK etc." max-selected-items="1" required/>
+        <input  ion-autocomplete type="search" ng-model-options="{debounce:1000}" name="location" readonly="readonly" class="ion-autocomplete cover-search-input" autocomplete="on" ng-model="modelFilter" loading-icon="ios-small" item-value-key="label" item-view-value-key="label" items-method="getTestItems(query)" items-method-value-key="items" items-clicked-method="clickedMethod
+(callback)" placeholder="Search ex Amir Khan, PK etc." max-selected-items="1" required/>
 			</div>
 		 	<div class="cover-input-text">
         <div class="cover-heading-text">Howdy! {{isLoggedIn == true ? user.display_name : 'Guest' | capitalize}}</div> 
@@ -22,13 +23,13 @@
   <a class="button  w100 radiuz-primary line-h50"  ui-sref="app.celebrity-listing">View All Celebrities</a>
 </div> 
    <div class="row pt12">
-            <div class="col-60">
+            <div class="col-80">
                 <h3 class="listing-title">Top Celebrities</h3>
             </div>
-            <div class="col-40 txt-right" ui-sref="app.celebrity-listing">
+       <!--      <div class="col-40 txt-right" ui-sref="app.celebrity-listing">
       <button class="radiuz-button radiuz-primary anchor-type-btn" ui-sref="app.celebrity-listing">View All</button>
                  
-            </div>
+            </div> -->
         </div>
 <div class="celebrity-listing home-listing">
 <div class="list list-listing" ng-repeat="topCeleb in topCelebs | limitTo:10">

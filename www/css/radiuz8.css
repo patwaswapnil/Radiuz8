@@ -1513,3 +1513,6 @@ a.autolinker {
 .ml3{
   margin-left: 3px;
 }
+.feed-item{
+  margin: auto 1px !important;
+}

@@ -8,7 +8,8 @@
                 <h3 class="listing-title">Celebrities on Radiuz8</h3>
             </div>
             <div class="col-20 filter-btn-wrap">
-                <button class="button button-icon button-clear ion-search"></button>
+                <input ion-autocomplete type="search" name="location" ng-model-options="{debounce:1000}" readonly="readonly" class="ion-autocomplete cover-search-input" autocomplete="on" ng-model="listingFilter" item-value-key="label" item-view-value-key="label" items-method="getTestItems(query)" items-method-value-key="items" items-clicked-method="clickedMethod(callback)" placeholder="Search ex Amir Khan, PK etc." max-selected-items="1" manage-externally="true" required style="display: none !important" />
+                <button class="button button-icon button-clear ion-search" ng-click="clickButton()"></button>
             </div>
             <div class="col-20 filter-btn-wrap">
                 <button class="button button-icon button-clear ion-funnel" ng-click="openFilters()"></button>
@@ -27,8 +28,11 @@
                 <button class="radiuz-button radiuz-primary" ng-if="celeb.isFollow" ng-click="follow($event, celeb.id, celeb.title)">Unfollow</button>
                 </span>
             </div>
-            <div class="txt-center" ng-if="!canLoadMore">
+            <div class="txt-center" ng-if="!canLoadMore && celebs.length">
                 <p class="no-more-celeb">All celebrities listed.</p>
+            </div>
+             <div class="padding"  ng-if="!celebs.length">
+             No Celebrity found.
             </div>
         </div>
         <ion-infinite-scroll on-infinite="loadMoreCeleb()" ng-if="canLoadMore" immediate-check="false" distance="1%"></ion-infinite-scroll>
@@ -38,8 +42,8 @@
     <ion-modal-view>
         <ion-header-bar class="bar bar-dark">
             <h1 class="title">Filter</h1>
-           <button class="button button-icon button-clear ion-close-round" ng-click="closeFilters()" menu-toggle="right">
-        </button> 
+            <button class="button button-icon button-clear ion-close-round" ng-click="closeFilters()" menu-toggle="right">
+            </button>
         </ion-header-bar>
         <ion-content has-bouncing="false" class="filter-modal">
             <div class="row pm0">
@@ -70,7 +74,7 @@
                 <div class="right-panel col-67 white-bg">
                     <span ng-show="showCat == 'cat'">
                     <ion-list> 
-                      <ion-radio class="noborder" ng-click="filterCatCeleb()"  ng-value="" ng-model="filters.cat">All Category</ion-radio>  
+                      <ion-radio class="noborder" ng-click="filterCeleb('resetCat')"  ng-value="" ng-model="filters.cat">All Category</ion-radio>  
                         <ion-radio class="noborder" ng-repeat="filter in filterCat" ng-click="filterCeleb('resetCat')"  ng-value="filter.cat_ID" ng-model="filters.cat">{{::filter.name}}</ion-radio>
                     </ion-list> 
                     
@@ -78,13 +82,9 @@
                     <span ng-show="showCat == 'showSubCat'"> 
                   <span  ng-repeat="subcatitem in subcat">
                         <span class="sub-cat-title item"> {{::subcatitem.cat_name}} </span>
-
                     <ion-list class="sub-cat-li">
-
                         <ion-checkbox ng-repeat="subcatChild in subcatitem.children" ng-click="toggleSelection(subcatChild.cat_ID)">{{::subcatChild.cat_name}}</ion-checkbox>
-
                     </ion-list>
-
                     </span>
                     </span>
                     <span ng-show="showCat == 'reach'">
@@ -151,12 +151,10 @@
                 </span>
                 </div>
             </div>
-
         </ion-content>
         <ion-footer-bar class="bar bar-footer bar-dark">
-            <button class="button   ml3" ng-click="filterCeleb('clear')">Clear Filter(s)</button>
-            <button class="button   mt-4" ng-click="closeFilters()">Done</button>
-
+            <button class="button  button-clear  ml3" ng-click="filterCeleb('clear')">Clear Filter(s)</button>
+            <button class="button  button-clear  mt-4" ng-click="closeFilters()">Done</button>
         </ion-footer-bar>
     </ion-modal-view>
 </script>
