@@ -457,7 +457,7 @@ angular.module('radiuz8.controllers', [])
                 console.log($scope.selection);
                 if ($scope.selection) {
                     $scope.selection.forEach(function(element, index) {
-                        tembVar += '&c=' + element;
+                        tembVar += '&c%5B0%5D%5B%5D=' + element;
                     });
                 } else {
                     tembVar = ''
