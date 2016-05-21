@@ -1,21 +1,21 @@
 angular.module('radiuz8.controllers', [])
     .controller('AppCtrl', ['$scope', '$ionicModal', '$timeout', '$ionicPopover', 'APIFactory', 'Loader', '$rootScope', 'LSFactory', '$ionicActionSheet',
         '$cordovaOauth', '$ionicPopup', '$state', '$ionicHistory', '$http', 'CommonFactory',
-        function($scope, $ionicModal, $timeout, $ionicPopover, APIFactory, Loader, $rootScope, LSFactory, $ionicActionSheet, $cordovaOauth, $ionicPopup,
+        function ($scope, $ionicModal, $timeout, $ionicPopover, APIFactory, Loader, $rootScope, LSFactory, $ionicActionSheet, $cordovaOauth, $ionicPopup,
             $state, $ionicHistory, $http, CommonFactory) {
             //$scope.$on('$ionicView.enter', function(e) {
             //}); 
-            $scope.updateUser = function() {
+            $scope.updateUser = function () {
                 if (LSFactory.get('radiusUser')) {
                     $rootScope.isLoggedIn = true;
                     $rootScope.user = LSFactory.get('radiusUser');
-                    $timeout(function() {
+                    $timeout(function () {
                         $rootScope.isLoggedIn = true;
                     }, 200);
                 } else {
                     $rootScope.isLoggedIn = false;
                     $rootScope.user = {};
-                    $timeout(function() {
+                    $timeout(function () {
                         $rootScope.isLoggedIn = false;
                     }, 200);
                 }
@@ -23,34 +23,34 @@ angular.module('radiuz8.controllers', [])
             $scope.updateUser();
             $ionicPopover.fromTemplateUrl('templates/common-template.html', {
                 scope: $scope
-            }).then(function(popover) {
+            }).then(function (popover) {
                 $scope.popover = popover;
             });
-            $scope.openPopover = function($event) {
+            $scope.openPopover = function ($event) {
                 $scope.popover.show($event);
             };
-            $rootScope.$on('showLoginModal', function($event, scope, cancelCallback, callback) {
+            $rootScope.$on('showLoginModal', function ($event, scope, cancelCallback, callback) {
                 $scope.showLogin = true;
-                $scope.registerToggle = function() {
+                $scope.registerToggle = function () {
                     $scope.showLogin = !$scope.showLogin;
                 }
                 $scope = scope || $scope;
                 $scope.viewLogin = true;
                 $ionicModal.fromTemplateUrl('templates/login.html', {
                     scope: $scope
-                }).then(function(modal) {
+                }).then(function (modal) {
                     $scope.loginModal = modal;
                     $scope.loginModal.show();
-                    $scope.hide = function() {
+                    $scope.hide = function () {
                         $scope.loginModal.hide();
                         if (typeof cancelCallback === 'function') {
                             cancelCallback();
                         }
                     }
-                    $scope.authUser = function(data) {
+                    $scope.authUser = function (data) {
                         console.log(data)
                         Loader.show('Authenticating')
-                        APIFactory.authUser(data).then(function(response) {
+                        APIFactory.authUser(data).then(function (response) {
                             if (response.data.msg == 'invalid') {
                                 Loader.toggleLoadingWithMessage('Invalid Username or Password', 2000);
                             } else if (response.data.msg == 'success') {
@@ -64,13 +64,13 @@ angular.module('radiuz8.controllers', [])
                             } else {
                                 Loader.toggleLoadingWithMessage('Oops! something went wrong. Please try again', 2000);
                             }
-                        }, function(error) {
+                        }, function (error) {
                             console.error(error)
                         })
                     }
-                    $scope.registerUser = function(data) {
+                    $scope.registerUser = function (data) {
                         Loader.show('Registering')
-                        APIFactory.registerUser(data).then(function(response) {
+                        APIFactory.registerUser(data).then(function (response) {
                             console.log(response);
                             if (response.data == 'EmailExist') {
                                 Loader.toggleLoadingWithMessage('Email is already registered!', 2000);
@@ -84,53 +84,53 @@ angular.module('radiuz8.controllers', [])
                                 };
                                 $scope.authUser(cred);
                             }
-                        }, function(error) {
+                        }, function (error) {
                             console.error(error)
                         })
                     }
                 });
-                $scope.facebookLogin = function() {
-                        Loader.show();
-                        $cordovaOauth.facebook("1695659084021677", ["email", "public_profile"], {
-                            redirect_uri: "http://localhost/callback"
-                        }).then(function(result) {
-                            $http.get("https://graph.facebook.com/v2.2/me", {
-                                params: {
-                                    access_token: result.access_token,
-                                    fields: "name,first_name,last_name,location,picture,email",
-                                    format: "json"
-                                }
-                            }).then(function(result) {
-                                console.log(result);
-                                $scope.params = {
-                                    firstName: result.data.first_name,
-                                    lastName: result.data.last_name,
-                                    regEmail: result.data.email,
-                                    regUsername: result.data.name
-                                };
-                                APIFactory.socialRegister($scope.params).then(function(response) {
-                                    $scope.loginModal.hide();
-                                    Loader.hide();
-                                    Loader.toast('Logged in successfuly');
-                                    LSFactory.set('radiusUser', response.data.data)
-                                    $scope.updateUser();
-                                    if (typeof callback === 'function') {
-                                        callback();
-                                    }
-                                }, function(error) {
-                                    Loader.hide();
-                                })
-                            }, function(error) {
+                $scope.facebookLogin = function () {
+                    Loader.show();
+                    $cordovaOauth.facebook("1695659084021677", ["email", "public_profile"], {
+                        redirect_uri: "http://localhost/callback"
+                    }).then(function (result) {
+                        $http.get("https://graph.facebook.com/v2.2/me", {
+                            params: {
+                                access_token: result.access_token,
+                                fields: "name,first_name,last_name,location,picture,email",
+                                format: "json"
+                            }
+                        }).then(function (result) {
+                            console.log(result);
+                            $scope.params = {
+                                firstName: result.data.first_name,
+                                lastName: result.data.last_name,
+                                regEmail: result.data.email,
+                                regUsername: result.data.name
+                            };
+                            APIFactory.socialRegister($scope.params).then(function (response) {
+                                $scope.loginModal.hide();
                                 Loader.hide();
-                            });
-                        }, function(error) {
+                                Loader.toast('Logged in successfuly');
+                                LSFactory.set('radiusUser', response.data.data)
+                                $scope.updateUser();
+                                if (typeof callback === 'function') {
+                                    callback();
+                                }
+                            }, function (error) {
+                                Loader.hide();
+                            })
+                        }, function (error) {
                             Loader.hide();
-                            console.log(error);
                         });
-                    } //end fb login
-                $scope.linkedinLogin = function() {
+                    }, function (error) {
+                        Loader.hide();
+                        console.log(error);
+                    });
+                } //end fb login
+                $scope.linkedinLogin = function () {
                     $cordovaOauth.linkedin("753yliulajl3aw", "0pmeKcWyPLG1Qmm7", ["r_basicprofile", "r_emailaddress"], "cnHKSsf5fc5n").then(
-                        function(result) {
+                        function (result) {
                             Loader.show();
                             $scope.param = {
                                 client_id: '753yliulajl3aw',
@@ -140,16 +140,16 @@ angular.module('radiuz8.controllers', [])
                                 code: result
                             }
                             APIFactory.linkedinToken($scope.param)
-                                .success(function(result) {
+                                .success(function (result) {
                                     var access_token = result.access_token;
                                     var expire_date = result.expires_in;
-                                    APIFactory.linkedInLogin(access_token).then(function(result) {
+                                    APIFactory.linkedInLogin(access_token).then(function (result) {
                                         $scope.params = {
                                             firstName: result.data.firstName,
                                             lastName: result.data.lastName,
                                             regEmail: result.data.emailAddress
                                         };
-                                        APIFactory.socialRegister($scope.params).then(function(response) {
+                                        APIFactory.socialRegister($scope.params).then(function (response) {
                                             $scope.loginModal.hide();
                                             Loader.hide();
                                             Loader.toast('Logged in successfuly');
@@ -158,22 +158,22 @@ angular.module('radiuz8.controllers', [])
                                             if (typeof callback === 'function') {
                                                 callback();
                                             }
-                                        }, function(error) {
+                                        }, function (error) {
                                             Loader.hide();
                                         });
-                                    }, function(error) {
+                                    }, function (error) {
                                         Loader.hide();
                                     });
                                 });
                         },
-                        function(error) {
+                        function (error) {
                             console.log(error);
                         });
                 };
             });
-            $scope.resetPwd = function() {
+            $scope.resetPwd = function () {
                 $scope.data = {}
-                    // An elaborate, custom popup
+                // An elaborate, custom popup
                 var myPopup = $ionicPopup.show({
                     template: '<input type="email" ng-model="data.regEmail" placeholder="Enter you email" class="padding">',
                     title: 'Enter your email address',
@@ -183,24 +183,24 @@ angular.module('radiuz8.controllers', [])
                         text: 'Cancel',
                         type: 'fs12 reset-btn'
                     }, {
-                        text: 'Submit',
-                        type: 'button-balanced fs12 reset-btn',
-                        onTap: function(e) {
-                            if (!$scope.data.regEmail) {
-                                //don't allow the user to close unless he enters wifi password
-                                e.preventDefault();
-                            } else {
-                                return $scope.data;
+                            text: 'Submit',
+                            type: 'button-balanced fs12 reset-btn',
+                            onTap: function (e) {
+                                if (!$scope.data.regEmail) {
+                                    //don't allow the user to close unless he enters wifi password
+                                    e.preventDefault();
+                                } else {
+                                    return $scope.data;
+                                }
                             }
-                        }
-                    }, ]
+                        },]
                 });
-                myPopup.then(function(data) {
+                myPopup.then(function (data) {
                     if (!data) {
                         return false;
                     }
                     Loader.show();
-                    APIFactory.resetPwd(data).then(function(response) {
+                    APIFactory.resetPwd(data).then(function (response) {
                         if (response.data == 1) {
                             Loader.hide();
                             Loader.toast('Your password reset link has been sent to your email Id');
@@ -208,14 +208,14 @@ angular.module('radiuz8.controllers', [])
                             Loader.hide();
                             Loader.toast('This Email Id is not registered');
                         }
-                    }, function(error) {
+                    }, function (error) {
                         console.error(error);
                         Loader.toggleLoadingWithMessage('Somwthing went wrong. Please try later');
                     })
                 });
             };
-            $scope.loginFromMenu = function() {
-                $rootScope.$broadcast('showLoginModal', $scope, null, function() {
+            $scope.loginFromMenu = function () {
+                $rootScope.$broadcast('showLoginModal', $scope, null, function () {
                     if ($state.is('app.home')) {
                         try {
                             $scope.$broadcast('refreshHomeData'); //get data using UserID
@@ -226,16 +226,16 @@ angular.module('radiuz8.controllers', [])
                     };
                 });
             };
-            $scope.logout = function() {
+            $scope.logout = function () {
                 var hideSheet = $ionicActionSheet.show({
                     destructiveText: 'Logout',
                     titleText: 'Are you sure you want to logout?',
                     cancelText: 'Cancel',
-                    cancel: function() {},
-                    buttonClicked: function(index) {
+                    cancel: function () { },
+                    buttonClicked: function (index) {
                         return true;
                     },
-                    destructiveButtonClicked: function() {
+                    destructiveButtonClicked: function () {
                         Loader.show();
                         LSFactory.delete('radiusUser');
                         hideSheet();
@@ -258,44 +258,44 @@ angular.module('radiuz8.controllers', [])
                     }
                 });
             };
-            $scope.toggleGroup = function(group) {
+            $scope.toggleGroup = function (group) {
                 if ($scope.isGroupShown(group)) {
                     $scope.shownGroup = null;
                 } else {
                     $scope.shownGroup = group;
                 }
             };
-            $scope.isGroupShown = function(group) {
+            $scope.isGroupShown = function (group) {
                 return $scope.shownGroup === group;
             };
 
             function followCelebrity(data, e) {
-                APIFactory.followCeleb(data).then(function(response) {
-                        Loader.hide();
-                        if (response.data == 'following') {
-                            Loader.toast('Following ' + data.cname);
-                            angular.element(e.target).text("Unfollow");
-                            $scope.$broadcast('followEventChanged');
-                        } else if (response.data == 'unfollowed') {
-                            angular.element(e.target).text("Follow");
-                            Loader.toast('Unfollowed ' + data.cname);
-                            $scope.$broadcast('followEventChanged');
-                        } else {
-                            Loader.toast('Oops! something went wrong. Please try following again')
-                        }
-                    },
-                    function(error) {
+                APIFactory.followCeleb(data).then(function (response) {
+                    Loader.hide();
+                    if (response.data == 'following') {
+                        Loader.toast('Following ' + data.cname);
+                        angular.element(e.target).text("Unfollow");
+                        $scope.$broadcast('followEventChanged');
+                    } else if (response.data == 'unfollowed') {
+                        angular.element(e.target).text("Follow");
+                        Loader.toast('Unfollowed ' + data.cname);
+                        $scope.$broadcast('followEventChanged');
+                    } else {
+                        Loader.toast('Oops! something went wrong. Please try following again')
+                    }
+                },
+                    function (error) {
                         Loader.toggleLoadingWithMessage('Oops! something went wrong. Please try following again');
                     })
             };
-            $scope.follow = function(event, cid, cname) {
+            $scope.follow = function (event, cid, cname) {
                 var data = {
                     cid: cid,
                     cname: cname,
                     userId: $rootScope.user.ID
                 };
                 if (!$rootScope.isLoggedIn) {
-                    $rootScope.$broadcast('showLoginModal', $scope, null, function() {
+                    $rootScope.$broadcast('showLoginModal', $scope, null, function () {
                         // user is now logged in
                         data.userId = $rootScope.user.ID;
                         followCelebrity(data, event);
@@ -304,30 +304,30 @@ angular.module('radiuz8.controllers', [])
                     followCelebrity(data, event);
                 }
             };
-            $scope.getSegment = function(link) { //for setting href celeb listing from permlnk
+            $scope.getSegment = function (link) { //for setting href celeb listing from permlnk
                 var segments = link.split('/');
                 var action = segments[3];
                 return '#/app/celebrity-detail/' + action;
             }
-            $scope.openLink = function(link, e) {
+            $scope.openLink = function (link, e) {
                 e.preventDefault();
-                CommonFactory.inAppLink(link).then(function(response) {}, function(error) {
+                CommonFactory.inAppLink(link).then(function (response) { }, function (error) {
                     console.log(error);
                 })
             };
         }
     ])
     .controller('HomeCtrl', ['$scope', 'APIFactory', 'Loader', '$rootScope',
-        function($scope, APIFactory, Loader, $rootScope) {
-            $scope.$on('$ionicView.enter', function(e) {
+        function ($scope, APIFactory, Loader, $rootScope) {
+            $scope.$on('$ionicView.enter', function (e) {
                 $scope.getTopCelebs();
             });
             $scope.filters = {};
             Loader.show();
-            $scope.$on('refreshHomeData', function(e) {
+            $scope.$on('refreshHomeData', function (e) {
                 $scope.getTopCelebs();
             });
-            $scope.getTopCelebs = function() {
+            $scope.getTopCelebs = function () {
                 $scope.filters = {};
                 $scope.filters.sort = 1;
                 if ($rootScope.isLoggedIn) {
@@ -336,18 +336,18 @@ angular.module('radiuz8.controllers', [])
                     $scope.filters.userId = undefined;
                     console.log($scope.filters);
                 }
-                APIFactory.getCelebs($scope.filters).then(function(response) {
-                        $scope.topCelebs = response.data.celebs;
-                        Loader.hide();
-                    },
-                    function(error) {
+                APIFactory.getCelebs($scope.filters).then(function (response) {
+                    $scope.topCelebs = response.data.celebs;
+                    Loader.hide();
+                },
+                    function (error) {
                         console.error(error);
                         Loader.hide();
                     });
             };
             $scope.getTopCelebs();
             $scope.modelFilter = "";
-            $scope.getTestItems = function(query, isInitializing) {
+            $scope.getTestItems = function (query, isInitializing) {
                 if (isInitializing) {
                     return {
                         items: []
@@ -366,14 +366,14 @@ angular.module('radiuz8.controllers', [])
                     $scope.$apply;
                 }
             }
-            $scope.clickedMethod = function(callback) {
+            $scope.clickedMethod = function (callback) {
                 var celebLink = $scope.getSegment(callback.item.permalink);
                 window.location.href = celebLink;
             }
-            $scope.filterData = function(data) {
-                APIFactory.searchCeleb(data).then(function(response) {
+            $scope.filterData = function (data) {
+                APIFactory.searchCeleb(data).then(function (response) {
                     $scope.found = response.data;
-                }, function(error) {
+                }, function (error) {
                     $scope.found = [];
                 });
                 return $scope.found;
@@ -381,7 +381,7 @@ angular.module('radiuz8.controllers', [])
         }
     ])
     .controller('ListingCtrl', ['$scope', '$ionicPopover', '$http', 'APIFactory', 'Loader', '$ionicModal', '$rootScope', '$timeout',
-        function($scope, $ionicPopover, $http, APIFactory, Loader, $ionicModal, $rootScope, $timeout) {
+        function ($scope, $ionicPopover, $http, APIFactory, Loader, $ionicModal, $rootScope, $timeout) {
             $scope.filters = {
                 cat: undefined,
                 c: '',
@@ -395,30 +395,30 @@ angular.module('radiuz8.controllers', [])
             };
             $scope.oldSubCat = [];
             $scope.canLoadMore = true;
-            $scope.getCelebs = function() {
+            $scope.getCelebs = function () {
                 Loader.show();
-                APIFactory.getCelebs($scope.filters).then(function(response) {
-                        $scope.celebs = response.data.celebs;
-                        if (!angular.equals(response.data.subcats, $scope.oldSubCat)) {
-                            $scope.subcat = response.data.subcats;
-                        }
-                        $scope.oldSubCat = angular.copy(response.data.subcats);
-                        try {
-                            $scope.canLoadMore = response.data.celebs.length;
-                        } catch (e) {
-                            $scope.canLoadMore = false;
-                            console.log(e);
-                        }
-                        $scope.filters.page += 1;
-                        Loader.hide();
-                    },
-                    function(error) {
+                APIFactory.getCelebs($scope.filters).then(function (response) {
+                    $scope.celebs = response.data.celebs;
+                    if (!angular.equals(response.data.subcats, $scope.oldSubCat)) {
+                        $scope.subcat = response.data.subcats;
+                    }
+                    $scope.oldSubCat = angular.copy(response.data.subcats);
+                    try {
+                        $scope.canLoadMore = response.data.celebs.length;
+                    } catch (e) {
+                        $scope.canLoadMore = false;
+                        console.log(e);
+                    }
+                    $scope.filters.page += 1;
+                    Loader.hide();
+                },
+                    function (error) {
                         console.error(error);
                         Loader.hide();
                     });
             }
             $scope.getCelebs();
-            $scope.filterCeleb = function(option) {
+            $scope.filterCeleb = function (option) {
                 Loader.show();
                 if (option == 'resetCat') {
                     $scope.filters.c = '';
@@ -441,10 +441,10 @@ angular.module('radiuz8.controllers', [])
             };
             // function for subcat filter &c=55&c=54
             $scope.selection = [];
-            $scope.toggleSelection = function(subcat) {
+            $scope.toggleSelection = function (subcat) {
                 var itemIndex = null;
                 var tembVar = '';
-                $scope.selection.forEach(function(element, index) {
+                $scope.selection.forEach(function (element, index) {
                     if (subcat == element) {
                         itemIndex = index;
                     }
@@ -456,7 +456,7 @@ angular.module('radiuz8.controllers', [])
                 }
                 console.log($scope.selection);
                 if ($scope.selection) {
-                    $scope.selection.forEach(function(element, index) {
+                    $scope.selection.forEach(function (element, index) {
                         tembVar += '&c%5B0%5D%5B%5D=' + element;
                     });
                 } else {
@@ -467,50 +467,50 @@ angular.module('radiuz8.controllers', [])
                 /* body... */
                 $scope.getCelebs();
             };
-            $scope.loadMoreCeleb = function() {
-                APIFactory.getCelebs($scope.filters).then(function(response) {
-                        var celebData = response.data.celebs;
-                        angular.forEach(celebData, function(element, index) {
-                            $scope.celebs.push(element);
-                        });
-                        try {
-                            if (!response.data.celebs.length) {
-                                $scope.canLoadMore = false;
-                            };
-                            // statements
-                        } catch (e) {
-                            // statements
+            $scope.loadMoreCeleb = function () {
+                APIFactory.getCelebs($scope.filters).then(function (response) {
+                    var celebData = response.data.celebs;
+                    angular.forEach(celebData, function (element, index) {
+                        $scope.celebs.push(element);
+                    });
+                    try {
+                        if (!response.data.celebs.length) {
                             $scope.canLoadMore = false;
-                            $scope.$broadcast('scroll.infiniteScrollComplete');
-                        }
-                        $scope.filters.page += 1;
+                        };
+                        // statements
+                    } catch (e) {
+                        // statements
+                        $scope.canLoadMore = false;
                         $scope.$broadcast('scroll.infiniteScrollComplete');
-                    },
-                    function(error) {
+                    }
+                    $scope.filters.page += 1;
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },
+                    function (error) {
                         console.error(error);
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     });
             };
-            APIFactory.getFilterCategory().then(function(response) {
+            APIFactory.getFilterCategory().then(function (response) {
                 $scope.filterCat = response.data;
-            }, function(error) {
+            }, function (error) {
                 console.error(error);
             });
             $ionicModal.fromTemplateUrl('templates/filters.html', {
                 scope: $scope,
                 animation: 'slide-in-up'
-            }).then(function(modal) {
+            }).then(function (modal) {
                 $scope.modal = modal;
             });
-            $scope.openFilters = function() {
+            $scope.openFilters = function () {
                 $scope.modal.show();
             };
-            $scope.closeFilters = function() {
+            $scope.closeFilters = function () {
                 $scope.modal.hide();
             };
             // Pass the checkbox name to the function 
             $scope.listingFilter = "";
-            $scope.getTestItems = function(query, isInitializing) {
+            $scope.getTestItems = function (query, isInitializing) {
                 if (isInitializing) {
                     return {
                         items: []
@@ -528,19 +528,19 @@ angular.module('radiuz8.controllers', [])
                     };
                 }
             }
-            $scope.clickedMethod = function(callback) {
+            $scope.clickedMethod = function (callback) {
                 var celebLink = $scope.getSegment(callback.item.permalink);
                 window.location.href = celebLink;
             }
-            $scope.filterData = function(data) {
-                APIFactory.searchCeleb(data).then(function(response) {
+            $scope.filterData = function (data) {
+                APIFactory.searchCeleb(data).then(function (response) {
                     $scope.found = response.data;
-                }, function(error) {
+                }, function (error) {
                     $scope.found = [];
                 });
                 return $scope.found;
             }
-            $scope.clickButton = function() {
+            $scope.clickButton = function () {
                 var ionAutocompleteElement = document.getElementsByClassName("ion-autocomplete");
                 angular.element(ionAutocompleteElement).controller('ionAutocomplete').fetchSearchQuery("", true);
                 angular.element(ionAutocompleteElement).controller('ionAutocomplete').showModal();
@@ -548,20 +548,19 @@ angular.module('radiuz8.controllers', [])
         }
     ])
     .controller('DetailCtrl', ['$scope', '$rootScope', '$ionicPlatform', '$stateParams', 'APIFactory', 'Loader', 'LSFactory',
-        function($scope, $rootScope, $ionicPlatform, $stateParams, APIFactory, Loader, LSFactory) {
-            $scope.getCelebrity = function() {
+        function ($scope, $rootScope, $ionicPlatform, $stateParams, APIFactory, Loader, LSFactory) {
+            $scope.getCelebrity = function () {
                 Loader.show();
                 var userId = undefined;
                 if ($rootScope.isLoggedIn) {
                     userId = $rootScope.user.ID;
                 }
-                APIFactory.getCelebDetail($stateParams.name, userId).then(function(response) {
+                APIFactory.getCelebDetail($stateParams.name, userId).then(function (response) {
                     console.log(response);
                     $scope.celebrity = response.data;
                     $scope.items = [];
-                    if (response.data.gallery.length)
-                    {
-                        response.data.gallery.forEach(function(element, index) {
+                    if (response.data.gallery.length) {
+                        response.data.gallery.forEach(function (element, index) {
                             var tempObj = {
                                 src: ''
                             };
@@ -571,32 +570,32 @@ angular.module('radiuz8.controllers', [])
                     }
                     try {
                         $scope.wiki = response.data.wiki.query.pages[Object.keys(response.data.wiki.query.pages)[0]].extract;
-                    } catch (e) {}
+                    } catch (e) { }
                     Loader.hide();
-                }, function(error) {
+                }, function (error) {
                     console.log(error);
                     Loader.hide();
                 })
             }
             $scope.getCelebrity();
-            $scope.set_star = function(number) {
+            $scope.set_star = function (number) {
                 var star = number * 20;
                 return {
                     width: star + '%'
                 }
             }
             $scope.activePan = 'social';
-            $scope.updatePan = function(name) {
+            $scope.updatePan = function (name) {
                 $scope.activePan = name;
             }
         }
     ])
     .controller('ChatListingCtrl', ['$scope', '$state', 'APIFactory', 'LSFactory', 'Loader', '$rootScope', '$ionicHistory',
-        function($scope, $state, APIFactory, LSFactory, Loader, $rootScope, $ionicHistory) {
+        function ($scope, $state, APIFactory, LSFactory, Loader, $rootScope, $ionicHistory) {
             if (!$rootScope.isLoggedIn) {
-                $rootScope.$broadcast('showLoginModal', $scope, function() {
+                $rootScope.$broadcast('showLoginModal', $scope, function () {
                     $ionicHistory.goBack(-1);
-                }, function() {
+                }, function () {
                     getChatListing();
                 });
             } else {
@@ -605,10 +604,10 @@ angular.module('radiuz8.controllers', [])
 
             function getChatListing() {
                 Loader.show();
-                APIFactory.messageExchange($rootScope.user.ID).then(function(response) {
+                APIFactory.messageExchange($rootScope.user.ID).then(function (response) {
                     $scope.msgList = response.data;
                     Loader.hide();
-                }, function(error) {
+                }, function (error) {
                     Loader.toast('Something went wrong. Please try later');
                     console.error(error);
                     Loader.hide();
@@ -618,19 +617,19 @@ angular.module('radiuz8.controllers', [])
     ])
     .controller('ChatCtrl', ['$scope', '$state', 'APIFactory', 'LSFactory', 'Loader', '$rootScope', '$stateParams', '$timeout', '$ionicScrollDelegate',
         '$ionicHistory',
-        function($scope, $state, APIFactory, LSFactory, Loader, $rootScope, $stateParams, $timeout, $ionicScrollDelegate, $ionicHistory) {
+        function ($scope, $state, APIFactory, LSFactory, Loader, $rootScope, $stateParams, $timeout, $ionicScrollDelegate, $ionicHistory) {
             $scope.chattingWith = $stateParams.name;
             $scope.chatWithId = $stateParams.celebId;
             if (!$rootScope.isLoggedIn) {
-                $rootScope.$broadcast('showLoginModal', $scope, function() {
+                $rootScope.$broadcast('showLoginModal', $scope, function () {
                     $ionicHistory.goBack(-1);
-                }, function() {
+                }, function () {
                     getMessages();
                 });
             } else {
                 getMessages();
             };
-            $scope.refreshList = function() {
+            $scope.refreshList = function () {
                 getMessages();
             }
 
@@ -640,21 +639,21 @@ angular.module('radiuz8.controllers', [])
                     userId: $rootScope.user.ID
                 };
                 Loader.show();
-                APIFactory.celebChatMsg($scope.data).then(function(response) {
+                APIFactory.celebChatMsg($scope.data).then(function (response) {
                     $scope.messages = response.data;
                     Loader.hide();
                     $scope.$broadcast('scroll.refreshComplete');
-                    $timeout(function() {
+                    $timeout(function () {
                         $ionicScrollDelegate.scrollBottom([true]);
                     }, 500);
-                }, function(error) {
+                }, function (error) {
                     Loader.toast('Something went wrong. Please try later');
                     console.error(error);
                     Loader.hide();
                     $scope.$broadcast('scroll.refreshComplete');
                 });
             }
-            $scope.sendMessage = function(msg, toId) {
+            $scope.sendMessage = function (msg, toId) {
                 try {
                     cordova.plugins.Keyboard.show();
                 } catch (e) {
@@ -665,14 +664,14 @@ angular.module('radiuz8.controllers', [])
                     toId: toId,
                     userId: $rootScope.user.ID
                 };
-                APIFactory.sendMessage($scope.msgHeader).then(function(response) {
+                APIFactory.sendMessage($scope.msgHeader).then(function (response) {
                     $scope.input.message = '';
                     $scope.messages = response.data;
-                    $timeout(function() {
+                    $timeout(function () {
                         $ionicScrollDelegate.scrollBottom([true]);
                     }, 500);
                     Loader.hide();
-                }, function(error) {
+                }, function (error) {
                     Loader.toast('Something went wrong. Please try later');
                     console.error(error);
                     Loader.hide();
@@ -681,16 +680,16 @@ angular.module('radiuz8.controllers', [])
         }
     ])
     .controller('FeedsCtrl', ['$scope', '$state', 'APIFactory', 'Loader', '$timeout', '$rootScope', '$ionicHistory',
-        function($scope, $state, APIFactory, Loader, $timeout, $rootScope, $ionicHistory) {
+        function ($scope, $state, APIFactory, Loader, $timeout, $rootScope, $ionicHistory) {
             $scope.noFeed = false;
             if (!$rootScope.isLoggedIn) {
-                $rootScope.$broadcast('showLoginModal', $scope, function() {
+                $rootScope.$broadcast('showLoginModal', $scope, function () {
                     $ionicHistory.nextViewOptions({
                         disableBack: true,
                         historyRoot: true
                     });
                     $state.go('app.home');
-                }, function() {
+                }, function () {
                     getFeeds();
                 });
             } else {
@@ -699,15 +698,15 @@ angular.module('radiuz8.controllers', [])
 
             function getFeeds() {
                 Loader.show();
-                APIFactory.getFeeds($rootScope.user.ID).then(function(response) {
+                APIFactory.getFeeds($rootScope.user.ID).then(function (response) {
                     $scope.tweets = response.data;
                     if (!$scope.tweets.length) {
                         $scope.noFeed = true;
                     }
-                    $timeout(function() {
+                    $timeout(function () {
                         Loader.hide();
                     }, 2500)
-                }, function(error) {
+                }, function (error) {
                     Loader.hide();
                     console.log(error);
                 })
@@ -715,23 +714,23 @@ angular.module('radiuz8.controllers', [])
         }
     ])
     .controller('ContactCelebCtrl', ['$scope', '$state', '$stateParams', 'APIFactory', '$ionicHistory', 'Loader', '$rootScope',
-        function($scope, $state, $stateParams, APIFactory, $ionicHistory, Loader, $rootScope) {
+        function ($scope, $state, $stateParams, APIFactory, $ionicHistory, Loader, $rootScope) {
             if (!$rootScope.isLoggedIn) {
-                $rootScope.$broadcast('showLoginModal', $scope, function() {
+                $rootScope.$broadcast('showLoginModal', $scope, function () {
                     $ionicHistory.goBack(-1);
                 }, null);
             }
             $scope.celebId = $stateParams.celebId;
             $scope.celebName = $stateParams.name;
-            $scope.sendMessage = function(data) {
+            $scope.sendMessage = function (data) {
                 data.celeb_name = $scope.celebName;
                 data.userId = $rootScope.user.ID;
                 Loader.show();
-                APIFactory.sendMsgCeleb(data).then(function(data) {
+                APIFactory.sendMsgCeleb(data).then(function (data) {
                     Loader.hide();
                     Loader.toast('Your message has been sent successfuly');
                     $ionicHistory.goBack(-1);
-                }, function(error) {
+                }, function (error) {
                     Loader.hide();
                     console.log(error);
                 })
@@ -739,11 +738,11 @@ angular.module('radiuz8.controllers', [])
         }
     ])
     .controller('userProfileCtrl', ['$scope', 'APIFactory', 'LSFactory', '$rootScope', 'Loader', '$ionicHistory',
-        function($scope, APIFactory, LSFactory, $rootScope, Loader, $ionicHistory) {
+        function ($scope, APIFactory, LSFactory, $rootScope, Loader, $ionicHistory) {
             if (!$rootScope.isLoggedIn) {
-                $rootScope.$broadcast('showLoginModal', $scope, function() {
+                $rootScope.$broadcast('showLoginModal', $scope, function () {
                     $ionicHistory.goBack(-1);
-                }, function() {
+                }, function () {
                     getUserData();
                 });
             } else {
@@ -752,38 +751,38 @@ angular.module('radiuz8.controllers', [])
 
             function getUserData() {
                 Loader.show();
-                APIFactory.userData($rootScope.user.ID).then(function(response) {
+                APIFactory.userData($rootScope.user.ID).then(function (response) {
                     Loader.hide();
                     $scope.userInfo = response.data;
-                }, function(data) {
+                }, function (data) {
                     /* body... */
                     Loader.hide();
                     Loader.toast('Oops! something went wrong');
                 })
             };
-            $scope.updateUser = function(data) {
+            $scope.updateUser = function (data) {
                 var password = {
                     pass: '',
                     repass: ''
                 };
                 Loader.show();
-                APIFactory.updateUser(data, password, $rootScope.user.ID).then(function(response) {
+                APIFactory.updateUser(data, password, $rootScope.user.ID).then(function (response) {
                     console.log(response);
                     Loader.hide();
                     Loader.toast('Profile updated successfuly');
-                }, function(error) {
+                }, function (error) {
                     console.log(error);
                     Loader.hide();
                     Loader.toast('Oops! something went wrong. Please try later again');
                 })
             }
-            $scope.changePassword = function(data, password) {
+            $scope.changePassword = function (data, password) {
                 Loader.show();
-                APIFactory.updateUser(data, password, $rootScope.user.ID).then(function(response) {
+                APIFactory.updateUser(data, password, $rootScope.user.ID).then(function (response) {
                     console.log(response);
                     Loader.hide();
                     Loader.toast('Password updated successfuly');
-                }, function(error) {
+                }, function (error) {
                     console.log(error);
                     Loader.hide();
                     Loader.toast('Oops! something went wrong. Please try later again');
@@ -792,26 +791,26 @@ angular.module('radiuz8.controllers', [])
         }
     ])
     .controller('FollowedCelebCtrl', ['$scope', 'APIFactory', 'LSFactory', '$rootScope', 'Loader', '$ionicHistory',
-        function($scope, APIFactory, LSFactory, $rootScope, Loader, $ionicHistory) {
+        function ($scope, APIFactory, LSFactory, $rootScope, Loader, $ionicHistory) {
             if (!$rootScope.isLoggedIn) {
-                $rootScope.$broadcast('showLoginModal', $scope, function() {
+                $rootScope.$broadcast('showLoginModal', $scope, function () {
                     $ionicHistory.goBack(-1);
-                }, function() {
+                }, function () {
                     getFollwedCeleb();
                 });
             } else {
                 getFollwedCeleb();
             }
-            $scope.$on('followEventChanged', function(e) {
+            $scope.$on('followEventChanged', function (e) {
                 getFollwedCeleb();
             })
 
             function getFollwedCeleb() {
                 Loader.show();
-                APIFactory.myFollowees($rootScope.user.ID).then(function(response) {
+                APIFactory.myFollowees($rootScope.user.ID).then(function (response) {
                     Loader.hide();
                     $scope.follwedCelebs = response.data;
-                }, function(data) {
+                }, function (data) {
                     Loader.hide();
                     Loader.toast('Oops! something went wrong');
                 })
@@ -819,11 +818,11 @@ angular.module('radiuz8.controllers', [])
         }
     ])
     .controller('contactCtrl', ['$scope', 'Loader', 'APIFactory', '$state', '$ionicHistory',
-        function($scope, Loader, APIFactory, $state, $ionicHistory) {
+        function ($scope, Loader, APIFactory, $state, $ionicHistory) {
             $scope.message = {};
-            $scope.sendMail = function() {
+            $scope.sendMail = function () {
                 Loader.show();
-                APIFactory.sendContactMail($scope.message).then(function(response) {
+                APIFactory.sendContactMail($scope.message).then(function (response) {
                     Loader.hide();
                     Loader.toast('Message sent successfuly');
                     $scope.message = {};
@@ -832,7 +831,7 @@ angular.module('radiuz8.controllers', [])
                         historyRoot: true
                     });
                     $state.go('app.home');
-                }, function(error) {
+                }, function (error) {
                     Loader.hide();
                     Loader.toast('Oops! something went wrong. Please try later again');
                 })
