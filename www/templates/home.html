@@ -1,51 +1,53 @@
 <ion-view>
- <ion-nav-title>
-      <img ng-src="img/logo.png" class="header-logo">
- </ion-nav-title>
+  <ion-nav-title>
+    <img ng-src="img/logo.png" class="header-logo">
+  </ion-nav-title>
   <ion-content>
     <div class="cover-item-wrapper cover-home">
-		<div class="cover-item">
-		<div class="cover-overlay">
-			<div class="cover-input-wrapper">
-				<!-- <input type="search"  class="cover-search-input" placeholder="Search ex Amir Khan, PK etc."> -->
-        <input  ion-autocomplete type="search" ng-model-options="{debounce:1000}" name="location" readonly="readonly" class="ion-autocomplete cover-search-input" autocomplete="on" ng-model="modelFilter" loading-icon="ios-small" item-value-key="label" item-view-value-key="label" items-method="getTestItems(query)" items-method-value-key="items" items-clicked-method="clickedMethod
+      <div class="cover-item">
+        <div class="cover-overlay">
+          <div class="cover-input-wrapper">
+            <!-- <input type="search"  class="cover-search-input" placeholder="Search ex Amir Khan, PK etc."> -->
+            <input ion-autocomplete type="search" ng-model-options="{debounce:1000}" name="location" readonly="readonly" class="ion-autocomplete cover-search-input"
+              autocomplete="on" ng-model="modelFilter" loading-icon="ios-small" item-value-key="label" item-view-value-key="label"
+              items-method="getTestItems(query)" items-method-value-key="items" items-clicked-method="clickedMethod
 (callback)" placeholder="Search ex Amir Khan, PK etc." max-selected-items="1" required/>
-			</div>
-		 	<div class="cover-input-text">
-        <div class="cover-heading-text">Howdy! {{isLoggedIn == true ? user.display_name : 'Guest' | capitalize}}</div> 
-				<a class="cover-feed-text" ui-sref="app.feeds"> My Feeds</a>
-			</div>  
-		</div>
-		</div>
-    </div> 
+          </div>
+          <div class="cover-input-text">
+            <div class="cover-heading-text">Howdy! {{isLoggedIn == true ? user.display_name : 'Guest' | capitalize}}</div>
+            <a class="cover-feed-text" ui-sref="app.feeds"> My Feeds</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="row">
-  <a class="button  w100 radiuz-primary line-h50"  ui-sref="app.celebrity-listing">View All Celebrities</a>
-</div> 
-   <div class="row pt12">
-            <div class="col-80">
-                <h3 class="listing-title">Top Celebrities</h3>
-            </div>
-       <!--      <div class="col-40 txt-right" ui-sref="app.celebrity-listing">
+    <div class="row">
+      <a class="button  w100 radiuz-primary line-h50" ui-sref="app.celebrity-listing">View All Celebrities</a>
+    </div>
+    <div class="row pt12">
+      <div class="col-80">
+        <h3 class="listing-title">Top Celebrities</h3>
+      </div>
+      <!--      <div class="col-40 txt-right" ui-sref="app.celebrity-listing">
       <button class="radiuz-button radiuz-primary anchor-type-btn" ui-sref="app.celebrity-listing">View All</button>
                  
             </div> -->
-        </div>
-<div class="celebrity-listing home-listing">
-<div class="list list-listing" ng-repeat="topCeleb in topCelebs | limitTo:10">
+    </div>
+    <div class="celebrity-listing home-listing">
+      <div class="list list-listing" ng-repeat="topCeleb in topCelebs | limitTo:10">
 
-    <span class="item item-thumbnail-left">
+        <span class="item item-thumbnail-left">
        <a class="celeb-img-a" ng-href="{{getSegment(topCeleb.permalink)}}"><img ng-src="{{::topCeleb.img}}" class="listing-img"></a> 
   	  <a  ng-href="{{getSegment(topCeleb.permalink)}}" class="celeb-name"><h2>{{::topCeleb.title}}</h2> </a>
       <p class="mt2">{{::topCeleb.age}}<span ng-if="topCeleb.age">, </span>{{::topCeleb.gender}}</p>
-      <p>Social Reach: {{::topCeleb.reach}}</p>
-      <button class="radiuz-button radiuz-primary" ng-if="!topCeleb.isFollow" ng-click="follow($event, topCeleb.id, topCeleb.title)">Follow</button>
-      <button class="radiuz-button radiuz-primary" ng-if="topCeleb.isFollow" ng-click="follow($event, topCeleb.id, topCeleb.title)">Unfollow</button>
+        <p>Social Reach: {{::topCeleb.reach}}</p>
+        <button class="radiuz-button radiuz-primary" ng-if="!topCeleb.isFollow" ng-click="follow($event, topCeleb.id, topCeleb.title)">Follow</button>
+        <button class="radiuz-button radiuz-primary" ng-if="topCeleb.isFollow" ng-click="follow($event, topCeleb.id, topCeleb.title)">Unfollow</button>
 
-    </span>
-</div>
+        </span>
+      </div>
 
-</div>
-  
+    </div>
+
   </ion-content>
 </ion-view>
